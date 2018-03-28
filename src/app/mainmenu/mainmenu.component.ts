@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Router } from '@angular/router';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-mainmenu',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainmenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public afAuth: AngularFireAuth,
+    private router: Router ) {
+  }
 
   ngOnInit() {
+    this.afAuth.authState.subscribe(authState => {
+      if(authState == null){
+        this.router.navigate(['/']);
+      }
+  })
+  }
+
+  googleSignIn() {
+    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+  signOut() {
+    this.afAuth.auth.signOut();
   }
 
 }
