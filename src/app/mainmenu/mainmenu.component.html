@@ -1,0 +1,58 @@
+<div style="text-align:center">
+  <img alt="p4_logo" src="https://www.winningmoves.fr/shop/media/resized/430/320/catalog/category/Puissance4.png" width="600">
+</div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 text-center">
+      <button type="button" class="btn" placement="top" ngbPopover="... Work in Progress ..." popoverTitle="COMING SOON !">Play</button>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-12 text-center">
+      <button type="button" class="btn" data-toggle="modal" data-target="#modalRules">
+        Rules
+      </button>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-12 text-center">
+      <button type="button" class="btn disabled">Profile</button>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-12 text-center">
+      <button type="button" class="btn" (click)="signOut()">Logout</button>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-12 text-center">
+      <button type="button" class="btn" id="credits">Credits</button>
+      <div id="panel">Wild Code School 2018 - Castellier Gwenolé - Bellamy Guillaume - Breaud Maxime</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalRules" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Rules</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>“Le but du jeu est d'aligner 4 pions sur une grille comptant 6 rangées et 7 colonnes. Chaque joueur dispose de 21
+          pions d'une couleur (par convention, en général jaune ou rouge). Tour à tour les deux joueurs placent un pion dans
+          la colonne de leur choix, le pion coulisse alors jusqu'à la position la plus basse possible dans ladite colonne
+          à la suite de quoi c'est à l'adversaire de jouer. Le vainqueur est le joueur qui réalise le premier un alignement
+          (horizontal, vertical ou diagonal) d'au moins quatre pions de sa couleur. Si, alors que toutes les cases de la
+          grille de jeu sont remplies, aucun des deux joueurs n'a réalisé un tel alignement, la partie est déclarée nulle.”
+          (Wikipédia)
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
