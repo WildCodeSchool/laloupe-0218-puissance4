@@ -17,12 +17,12 @@ export class MainmenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    $("#credits").click(function () {
-      $("#panel").toggle("slide");
+    $('#credits').click(function () {
+      $('#panel').toggle('slide');
     });
-    
+
     this.afAuth.authState.subscribe(authState => {
-      if(authState == null){
+      if (authState == null) {
         this.router.navigate(['/']);
       }
     });

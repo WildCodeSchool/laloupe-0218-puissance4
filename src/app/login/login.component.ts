@@ -11,25 +11,25 @@ import * as firebase from 'firebase/app';
 export class LoginComponent implements OnInit {
 
   constructor(
-    public afAuth: AngularFireAuth, 
-    private router: Router 
-   ) {} 
-  ngOnInit(){
+    public afAuth: AngularFireAuth,
+    private router: Router
+   ) {}
+  ngOnInit() {
     this.afAuth.authState.subscribe(authState => {
-        if(authState){
+        if (authState) {
           this.router.navigate(['mainmenu']);
           document.getElementById('invisible').style.display = 'signin';
         }
-        if(authState == null){
+        if (authState == null) {
           document.getElementById('signout').style.display = 'none';
         }
-    })
+    });
   }
-  googleSignIn(){
+  googleSignIn() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    let signout = document.getElementById("messagesUtilisateur");
+    const signout = document.getElementById('messagesUtilisateur');
   }
-  signOut(){
+  signOut() {
     this.afAuth.auth.signOut();
   }
 }
