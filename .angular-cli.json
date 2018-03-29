@@ -3,7 +3,6 @@
   "project": {
     "name": "angul"
   },
-
   "apps": [{
     "root": "src",
     "outDir": "dist",
