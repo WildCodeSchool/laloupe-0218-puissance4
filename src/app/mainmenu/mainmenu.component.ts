@@ -13,7 +13,7 @@ export class MainmenuComponent implements OnInit {
 
   constructor(
     public afAuth: AngularFireAuth,
-    private router: Router ) {
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -33,6 +33,10 @@ export class MainmenuComponent implements OnInit {
   }
   signOut() {
     this.afAuth.auth.signOut();
+  }
+
+  createGame() {
+    this.router.navigate(['matchmaking']);
   }
 
 }
