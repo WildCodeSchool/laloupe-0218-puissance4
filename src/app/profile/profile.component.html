@@ -1,0 +1,7 @@
+<div *ngIf="afAuth.authState | async as user; else showLogin" class="signOut">
+  <h4>{{ user.displayName }}&emsp;</h4>
+  <img class="imgLog" src="{{ user.photoURL }}" />
+</div>
+<div>
+  <button type="button" class="btn" (click)="mainMenu()">Back</button>
+</div>

@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { GameComponent } from './game/game.component';
 import { MatchmakingComponent } from './matchmaking/matchmaking.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 const appRoutes: Routes = [
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'mainmenu', component: MainmenuComponent },
   { path: 'matchmaking', component: MatchmakingComponent },
   { path: 'game', component: GameComponent },
+  { path: 'profile', component: ProfileComponent },
   {
     path: '**',
     redirectTo: '/',
@@ -34,6 +36,7 @@ const appRoutes: Routes = [
     MainmenuComponent,
     GameComponent,
     MatchmakingComponent,
+    ProfileComponent,
   ],
   imports: [
     NgbModule.forRoot(),
