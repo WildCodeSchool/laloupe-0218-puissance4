@@ -14,7 +14,7 @@ export class MatchmakingComponent implements OnInit {
   constructor(
     public afAuth: AngularFireAuth,
     private router: Router,
-    db: AngularFirestore) { this.items = db.collection('items').valueChanges(); }
+    private db: AngularFirestore) { this.items = db.collection('items').valueChanges(); }
 
   ngOnInit() {
     this.afAuth.authState.subscribe(authState => {
