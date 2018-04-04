@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'mainmenu', component: MainmenuComponent },
   { path: 'matchmaking', component: MatchmakingComponent },
-  { path: 'game', component: GameComponent },
+  { path: 'game/:id/:username', component: GameComponent },
   {
     path: '**',
     redirectTo: '/',
