@@ -1,8 +1,23 @@
-<p>
-  matchmaking works!
-</p>
-<ul>
-  <li class="text" *ngFor="let item of items | async">
-    {{item.name}}
-  </li>
-</ul>
+<div class="row  justify-content-center">
+  <div class="col-10 text-center">
+    <img class="logoP4" alt="p4_logo" src="https://www.winningmoves.fr/shop/media/resized/430/320/catalog/category/Puissance4.png">
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col-5 text-center backLogo">
+    <div>
+      <img class="waitLogo" src="./../assets/img/loading.gif" alt="logo please wait">
+    </div>
+    <p class="waitText">
+      Please wait !
+      <br/> Looking for an other player !
+    </p>
+  </div>
+</div>
+<div class="row  justify-content-center">
+  <div class="col-12 text-center">
+    <div>
+      <button type="button" class="btn" (click)="mainMenu()">Cancel</button>
+    </div>
+  </div>
+</div>

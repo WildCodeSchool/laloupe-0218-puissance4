@@ -24,4 +24,7 @@ export class MatchmakingComponent implements OnInit {
     });
 
   }
+  mainMenu() {
+    this.router.navigate(['mainmenu']);
+  }
 }
