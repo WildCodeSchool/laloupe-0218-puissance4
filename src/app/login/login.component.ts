@@ -6,23 +6,23 @@ import * as firebase from 'firebase/app';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
 
   constructor(
     public afAuth: AngularFireAuth,
-    private router: Router
-   ) {}
+    private router: Router,
+  ) { }
   ngOnInit() {
-    this.afAuth.authState.subscribe(authState => {
-        if (authState) {
-          this.router.navigate(['mainmenu']);
-          document.getElementById('invisible').style.display = 'signin';
-        }
-        if (authState == null) {
-          document.getElementById('signout').style.display = 'none';
-        }
+    this.afAuth.authState.subscribe((authState) => {
+      if (authState) {
+        this.router.navigate(['mainmenu']);
+        document.getElementById('invisible').style.display = 'signin';
+      }
+      if (authState == null) {
+        document.getElementById('signout').style.display = 'none';
+      }
     });
   }
   googleSignIn() {

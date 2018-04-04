@@ -10,7 +10,7 @@ import 'rxjs/add/operator/take';
 @Component({
   selector: 'app-matchmaking',
   templateUrl: './matchmaking.component.html',
-  styleUrls: ['./matchmaking.component.css']
+  styleUrls: ['./matchmaking.component.css'],
 })
 export class MatchmakingComponent implements OnInit {
   items: Observable<any[]>;
@@ -20,7 +20,7 @@ export class MatchmakingComponent implements OnInit {
     private db: AngularFirestore) { this.items = db.collection('items').valueChanges(); }
 
   ngOnInit() {
-    this.afAuth.authState.subscribe(authState => {
+    this.afAuth.authState.subscribe((authState) => {
       if (authState == null) {
         this.router.navigate(['/']);
       }
