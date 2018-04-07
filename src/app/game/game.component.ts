@@ -7,7 +7,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css']
+  styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.afAuth.authState.subscribe(authState => {
+    this.afAuth.authState.subscribe((authState) => {
       if (authState == null) {
         this.router.navigate(['/']);
       }
