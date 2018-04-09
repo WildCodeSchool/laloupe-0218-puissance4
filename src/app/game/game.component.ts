@@ -26,12 +26,10 @@ export class GameComponent implements OnInit {
       if (authState == null) {
         this.router.navigate(['/']);
       }
-   
     });
 
     const roomCollection = this.db.collection<Room>('rooms');
     this.room = this.roomCollection.valueChanges();
-    console.log(this.room);
   }
 
   
