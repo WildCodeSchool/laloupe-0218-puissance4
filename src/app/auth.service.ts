@@ -5,17 +5,24 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AuthService {
 
-  authId: string;
+  uid: string;
   name: string;
-  
+  img: string;
+  nbrGame: number;
+  nbrWins: number;
+  nbrLoose: number;
 
   constructor(private afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.authId = user.uid;
+        this.uid = user.uid;
         this.name = user.displayName;
+        this.img = user.photoURL;
+        this.nbrGame = 0;
+        this.nbrWins = 0;
+        this.nbrLoose = 0;
       } else {
-        this.authId = null;
+        this.uid = null;
         this.name = null;
       }
     });
