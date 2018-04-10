@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <div class="col-6 text-center backProfile">
-    <div *ngIf="afAuth.authState | async as user; else showLogin" class="signOut">
+    <div *ngIf="afAuth.authState | async as user" class="signOut">
       <img class="imgLog" src="{{ user.photoURL }}" />
       <h4 class="pseudo">{{ user.displayName }}&emsp;</h4>
       <div class="winRate">
