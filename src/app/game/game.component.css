@@ -1,1 +1,31 @@
-/* GAME CSS */
+.cell{
+    width: 50px;
+    height: 50px;
+    border: solid 5px;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    border-radius: 2cm;
+    float: left;
+    
+}
+
+.line{
+    display: block;
+    clear: both;
+}
+
+.red{
+    width: 40px;
+    height: 40px;
+    border-radius: 2cm;
+    background-color: red;
+}
+.yellow{
+    width: 40px;
+    height: 40px;
+    border-radius: 2cm;
+    background-color: yellow;
+}
