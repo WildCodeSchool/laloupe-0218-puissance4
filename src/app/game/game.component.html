@@ -14,5 +14,6 @@
   </div>
   <div class="win" *ngIf="this.room.winner != 2">
     Le joueur {{this.room.players[this.room.winner].name}} à gagné !
+    <button (click)="menu()">Menu</button>
   </div>
 </div>

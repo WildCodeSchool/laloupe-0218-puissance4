@@ -238,6 +238,9 @@ export class GameComponent implements OnInit {
     }
   }
 
+menu() {
+  this.router.navigate(['mainmenu']);
+}
 
 
 
