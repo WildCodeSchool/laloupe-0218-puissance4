@@ -19,13 +19,13 @@ const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'mainmenu', component: MainmenuComponent },
   { path: 'matchmaking', component: MatchmakingComponent },
-  { path: 'game', component: GameComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'game/:id/:username', component: GameComponent },
   {
     path: '**',
     redirectTo: '/',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 
@@ -44,8 +44,8 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true }
-    )
+      { enableTracing: true },
+    ),
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent],

@@ -7,7 +7,7 @@ import * as firebase from 'firebase/app';
 @Component({
   selector: 'app-mainmenu',
   templateUrl: './mainmenu.component.html',
-  styleUrls: ['./mainmenu.component.css']
+  styleUrls: ['./mainmenu.component.css'],
 })
 export class MainmenuComponent implements OnInit {
 
@@ -17,11 +17,7 @@ export class MainmenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    $('#credits').click(function () {
-      $('#panel').toggle('slide');
-    });
-
-    this.afAuth.authState.subscribe(authState => {
+    this.afAuth.authState.subscribe((authState) => {
       if (authState == null) {
         this.router.navigate(['/']);
       }
