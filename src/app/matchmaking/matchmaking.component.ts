@@ -6,6 +6,8 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Player } from '../models/player';
 import { Room } from '../models/room';
 import 'rxjs/add/operator/take';
+import { AuthService } from './../auth.service';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-matchmaking',
@@ -15,9 +17,12 @@ import 'rxjs/add/operator/take';
 export class MatchmakingComponent implements OnInit {
   items: Observable<any[]>;
   constructor(
+    private authService: AuthService,
     public afAuth: AngularFireAuth,
     private router: Router,
     private db: AngularFirestore) { }
+
+    private authSubscription: Subscription;
 
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {
@@ -33,7 +38,7 @@ export class MatchmakingComponent implements OnInit {
 
     const snapshot = roomCollection.snapshotChanges().take(1).subscribe((snapshot) => {
       const player = new Player();
-      player.name = 'user' + Math.floor(Math.random() * 1000);
+      player.name = this.authService.name;
 
       for (const snapshotItem of snapshot) {
         const roomId = snapshotItem.payload.doc.id;

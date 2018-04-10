@@ -2,13 +2,17 @@
   <div class="line " *ngFor="let line of this.room.grid">
     <div class="cell" *ngFor="let cell of line.line; let i = index" (click)='play(i)'>
       <div class="img-pion" *ngIf="cell != 'vide'">
-        <div class="red" *ngIf="cell == 'red'"></div>
+        <div class="red" *ngIf="cell == 'red'">
+          <div *ngIf="afAuth.authState | async as user" class="signOut">
+            <img src="{{ user.photoURL }}" width="50" height="50" class="red" />
+          </div>
+        </div>
         <div class="yellow" *ngIf="cell == 'yellow'"></div>
       </div>
-      
+
     </div>
   </div>
-  <div class="win" *ngIf="this.win == true" >
+  <div class="win" *ngIf="this.win == true">
     Le joueur {{this.colorWin}} à gagné !
   </div>
 </div>
