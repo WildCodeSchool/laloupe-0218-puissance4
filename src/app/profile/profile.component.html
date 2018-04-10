@@ -1,0 +1,19 @@
+<div class="row justify-content-center">
+  <div class="col-6 text-center backProfile">
+    <div *ngIf="afAuth.authState | async as user; else showLogin" class="signOut">
+      <img class="imgLog" src="{{ user.photoURL }}" />
+      <h4 class="pseudo">{{ user.displayName }}&emsp;</h4>
+      <div class="winRate">
+        <p>Nbr of games</p>
+        <p>Wins</p>
+        <p>Loose</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-5 text-center">
+    <button type="button" class="btn" (click)="mainMenu()">Back</button>
+  </div>
+</div>
