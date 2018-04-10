@@ -1,29 +1,40 @@
 .logoP4 {
-    width: 25em;
-    margin: -2em;
+  width: 25em;
+  margin: -2em;
 }
-.waitLogo {  
-    width: 80px;
+
+.waitLogo {
+  width: 80px;
 }
+
 .waitText {
-    margin-top: 1.5em;
-    text-align: center;
-    color: rgba(245, 245, 245, 0.897);
-    font-weight: bold;
-    font-size: 1.5em;
+  margin-top: 1.5em;
+  text-align: center;
+  color: rgba(245, 245, 245, 0.897);
+  font-weight: bold;
+  font-size: 1.5em;
 }
+
 .backLogo {
-    padding: 1em;
-    background:rgba(0, 0, 0, 0.4)
+  padding: 1em;
+  background: rgba(0, 0, 0, 0.4)
 }
+
 .btn {
-    background-color: #D3D3D3;
-    border: solid black 3px;
-    margin-top: 50px;
-    padding-left: 15px;
-    padding-right: 15px;
-    width: 400px;
-    -ms-transform: skewX(-20deg);
-    -webkit-transform: skewX(-20deg);
-    transform: skewX(-20deg);
+  background-color: #D3D3D3;
+  border: solid black 3px;
+  margin-top: 50px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 400px;
+  transition: all 0.15s ease-in-out;
+  -ms-transform: skewX(-20deg);
+  -webkit-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+.btn:hover {
+  width: 450px;
+  background-color: black;
+  color: white;
 }

@@ -5,16 +5,23 @@
   padding-left: 15px;
   padding-right: 15px;
   width: 400px;
+  transition: all 0.15s ease-in-out;
   -ms-transform: skewX(-20deg);
   -webkit-transform: skewX(-20deg);
   transform: skewX(-20deg);
 }
 
-img {
-  margin-bottom: -75px;
+.btn:hover {
+  width: 450px;
+  background-color: black;
+  color: white;
 }
 
-#panel {
-  display: none;
+img {
+  margin-bottom: -75px;
+  margin-top: -15px;
+}
+
+.credits {
   margin-top: 100px;
 }
