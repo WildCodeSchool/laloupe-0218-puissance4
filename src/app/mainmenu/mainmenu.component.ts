@@ -7,21 +7,17 @@ import * as firebase from 'firebase/app';
 @Component({
   selector: 'app-mainmenu',
   templateUrl: './mainmenu.component.html',
-  styleUrls: ['./mainmenu.component.css']
+  styleUrls: ['./mainmenu.component.css'],
 })
 export class MainmenuComponent implements OnInit {
 
   constructor(
     public afAuth: AngularFireAuth,
-    private router: Router ) {
+    private router: Router) {
   }
 
   ngOnInit() {
-    $('#credits').click(function () {
-      $('#panel').toggle('slide');
-    });
-
-    this.afAuth.authState.subscribe(authState => {
+    this.afAuth.authState.subscribe((authState) => {
       if (authState == null) {
         this.router.navigate(['/']);
       }
@@ -33,6 +29,10 @@ export class MainmenuComponent implements OnInit {
   }
   signOut() {
     this.afAuth.auth.signOut();
+  }
+
+  createGame() {
+    this.router.navigate(['matchmaking']);
   }
 
 }
