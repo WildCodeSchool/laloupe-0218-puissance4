@@ -34,7 +34,7 @@ export class MainmenuComponent implements OnInit {
   createGame() {
     this.router.navigate(['matchmaking']);
   }
-  Profile() {
+  profile() {
     this.router.navigate(['profile']);
   }
 }

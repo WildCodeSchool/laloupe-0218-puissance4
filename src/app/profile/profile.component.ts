@@ -7,7 +7,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
   items: Observable<any[]>;
@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit() {
-    this.afAuth.authState.subscribe(authState => {
+    this.afAuth.authState.subscribe((authState) => {
       if (authState == null) {
         this.router.navigate(['/']);
       }
