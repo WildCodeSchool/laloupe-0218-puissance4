@@ -38,7 +38,7 @@ export class MatchmakingComponent implements OnInit {
 
     const snapshot = roomCollection.snapshotChanges().take(1).subscribe((snapshot) => {
       const player = new Player();
-      player.name = this.authService.name;
+      player.name = this.authService.name.replace(/\s/g, '');
 
       for (const snapshotItem of snapshot) {
         const roomId = snapshotItem.payload.doc.id;
@@ -56,6 +56,7 @@ export class MatchmakingComponent implements OnInit {
       room.players = [player];
       room.turn = 0;
       room.grid = this.createGrid(6, 7);
+      room.winner = 2;
 
       this.db.collection('rooms')
         .add(JSON.parse(JSON.stringify(room)))

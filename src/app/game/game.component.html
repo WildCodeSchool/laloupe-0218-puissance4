@@ -12,7 +12,7 @@
 
     </div>
   </div>
-  <div class="win" *ngIf="this.win == true">
-    Le joueur {{this.colorWin}} à gagné !
+  <div class="win" *ngIf="this.room.winner != 2">
+    Le joueur {{this.room.players[this.room.winner].name}} à gagné !
   </div>
 </div>

@@ -64,7 +64,7 @@ export class GameComponent implements OnInit {
   play(col) {
     console.log(this.room.turn);
     console.log(this.room.players[this.room.turn].name);
-    if ( this.room.players[this.room.turn].name == this.authService.name) { 
+    if ( this.room.players[this.room.turn].name == this.authService.name.replace(/\s/g, '')) { 
       const i = 0;
       let m = this.room.grid.length - 1;
       let ok = false;
@@ -87,7 +87,7 @@ export class GameComponent implements OnInit {
         }
         this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
         this.verifvictory();
-        this.changeTurn();
+        
       } 
     }
   }
@@ -230,9 +230,11 @@ export class GameComponent implements OnInit {
     }
 
     if (align >= 4) {
-      console.log(color + 'WIN !');
-      this.colorWin = color;
-      this.win = true;
+      this.room.winner = this.room.turn 
+      this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+      console.log(this.room.players[this.room.winner].name + 'WIN !');
+    } else {
+      this.changeTurn();
     }
   }
 
