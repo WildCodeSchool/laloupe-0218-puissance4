@@ -5,7 +5,14 @@ button {
   padding-left: 15px;
   padding-right: 15px;
   width: 400px;
+  transition: all 0.15s ease-in-out;
   -ms-transform: skewX(-20deg);
   -webkit-transform: skewX(-20deg);
   transform: skewX(-20deg);
+}
+
+button:hover {
+  width: 450px;
+  background-color: black;
+  color: white;
 }
