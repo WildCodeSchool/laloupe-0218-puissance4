@@ -33,7 +33,6 @@ export class GameComponent implements OnInit {
   colorWin: string;
   roomId;
   yourTurn;
-  playerName;
 
   ngOnInit() {
 
@@ -50,7 +49,6 @@ export class GameComponent implements OnInit {
       .valueChanges()
       .subscribe((room) => {
         this.room = room;
-        this.playerName = room.players[room.players.length - 1].name
       });
 
 
@@ -66,8 +64,7 @@ export class GameComponent implements OnInit {
   play(col) {
     console.log(this.room.turn);
     console.log(this.room.players[this.room.turn].name);
-    console.log(this.playerName);
-    if ( this.room.players[this.room.turn].name == this.playerName) { 
+    if ( this.room.players[this.room.turn].name == this.authService.name) { 
       const i = 0;
       let m = this.room.grid.length - 1;
       let ok = false;
