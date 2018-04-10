@@ -3,8 +3,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Player } from './../models/player';
-import { Room } from './../models/room';
+import { Player } from '../models/player';
+import { Room } from '../models/room';
 import 'rxjs/add/operator/take';
 
 @Component({
@@ -17,7 +17,7 @@ export class MatchmakingComponent implements OnInit {
   constructor(
     public afAuth: AngularFireAuth,
     private router: Router,
-    private db: AngularFirestore) { this.items = db.collection('items').valueChanges(); }
+    private db: AngularFirestore) { }
 
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {
@@ -49,6 +49,9 @@ export class MatchmakingComponent implements OnInit {
 
       const room = new Room();
       room.players = [player];
+      room.turn = 0;
+      room.grid = this.createGrid(6, 7);
+      
       this.db.collection('rooms')
         .add(JSON.parse(JSON.stringify(room)))
         .then((doc) => {
@@ -57,7 +60,20 @@ export class MatchmakingComponent implements OnInit {
     });
   }
 
-  mainMenu() {
-    this.router.navigate(['mainmenu']);
+  createGrid(lin, col) {
+    const grid = [] ;
+    let i = 0;
+    while (i < lin) {
+      grid[i] = { line : [] };
+      let m = 0;
+      while (m < col) {
+        
+        grid[i].line[m] = 'vide';
+        m = m + 1;
+      }
+      i = i + 1;
+    }
+    console.log('grid');
+    return grid;
   }
 }
