@@ -22,7 +22,7 @@ export class MatchmakingComponent implements OnInit {
     private router: Router,
     private db: AngularFirestore) { }
 
-    private authSubscription: Subscription;
+  private authSubscription: Subscription;
 
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {
