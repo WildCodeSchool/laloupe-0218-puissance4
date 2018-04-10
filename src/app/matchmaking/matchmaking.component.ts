@@ -60,13 +60,13 @@ export class MatchmakingComponent implements OnInit {
     });
   }
 
-  createGrid(lin, col){
-   let grid = [] ;
-   let i = 0;
-    while(i < lin) {
-      grid[i] = {line : []};
+  createGrid(lin, col) {
+    const grid = [] ;
+    let i = 0;
+    while (i < lin) {
+      grid[i] = { line : [] };
       let m = 0;
-      while(m < col) {
+      while (m < col) {
         
         grid[i].line[m] = 'vide';
         m = m + 1;
@@ -74,6 +74,6 @@ export class MatchmakingComponent implements OnInit {
       i = i + 1;
     }
     console.log('grid');
-  return grid
+    return grid;
   }
 }

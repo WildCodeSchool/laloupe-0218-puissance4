@@ -42,7 +42,7 @@ export class GameComponent implements OnInit {
       .subscribe((room) => {
         this.room = room;
 
-      })
+      });
 
 
   }
@@ -51,20 +51,20 @@ export class GameComponent implements OnInit {
 
   changeTurn() {
 
-    this.room.turn = this.room.turn == 0 ? 1 : 0;
+    this.room.turn = this.room.turn === 0 ? 1 : 0;
     console.log(this.room.turn);
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
   }
 
   play(col) {
-    let i = 0;
+    const i = 0;
     let m = this.room.grid.length - 1;
-    let ok = false
-    if (this.room.grid[0].line[col] != 'vide') {
-      console.log("You can't play here")
+    let ok = false;
+    if (this.room.grid[0].line[col] !== 'vide') {
+      console.log('You can\'t play here');
     } else {
-      while (ok == false) {
-        if (this.room.grid[m].line[col] != 'vide' && m > 0) {
+      while (!ok) {
+        if (this.room.grid[m].line[col] !== 'vide' && m > 0) {
           m = m - 1;
 
         } else {
@@ -72,14 +72,14 @@ export class GameComponent implements OnInit {
 
         }
       }
-      if (this.room.turn == 0) {
+      if (this.room.turn === 0) {
         this.room.grid[m].line[col] = 'red';
       } else {
         this.room.grid[m].line[col] = 'yellow';
       }
       this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
-      this.verifvictory()
-      this.changeTurn()
+      this.verifvictory();
+      this.changeTurn();
     }
   }
 
@@ -88,7 +88,7 @@ export class GameComponent implements OnInit {
     let align = 0;
     let i = 0;
     let m = 0;
-    if (this.room.turn == 0) {
+    if (this.room.turn === 0) {
       color = 'red';
     } else {
       color = 'yellow';
@@ -101,7 +101,7 @@ export class GameComponent implements OnInit {
       i = 0;
       while (this.room.grid.length > i && align < 4) {
 
-        if (this.room.grid[i].line[m] == color && align < 4) {
+        if (this.room.grid[i].line[m] === color && align < 4) {
           align = align + 1;
         } else {
           align = 0;
@@ -117,13 +117,13 @@ export class GameComponent implements OnInit {
     m = 0;
 
     // horizontal win
-   
+
     while (this.room.grid.length > i && align < 4) {
       align = 0;
       m = 0;
       while (this.room.grid[0].line.length > m && align < 4) {
 
-        if (this.room.grid[i].line[m] == color && align < 4) {
+        if (this.room.grid[i].line[m] === color && align < 4) {
           align = align + 1;
         } else {
           align = 0;
@@ -135,7 +135,7 @@ export class GameComponent implements OnInit {
 
     }
 
-    //diago win
+    // diago win
     if (align < 4) {
       align = 0;
       i = 0;
@@ -147,7 +147,7 @@ export class GameComponent implements OnInit {
         m = 0;
         while (this.room.grid[0].line.length > m && align < 4) {
 
-          if (this.room.grid[i].line[m] == color && align < 4) {
+          if (this.room.grid[i].line[m] === color && align < 4) {
             align = align + 1;
             console.log('align', align, 'en', i + 1, m + 1);
           } else {
@@ -159,7 +159,8 @@ export class GameComponent implements OnInit {
             console.log('test', align, 'en', iBis + 1, mBis + 1);
             while (align > 0 && align < 4) {
               console.log(iBis, mBis);
-              if (iBis < this.room.grid.length && this.room.grid[iBis].line[mBis] == color && align < 4 ) {
+              if (iBis < this.room.grid.length && this.room
+                .grid[iBis].line[mBis] === color && align < 4) {
                 align = align + 1;
                 mBis = mBis + 1;
                 iBis = iBis + 1;
@@ -188,7 +189,7 @@ export class GameComponent implements OnInit {
         m = 0;
         while (this.room.grid[0].line.length > m && align < 4) {
 
-          if (this.room.grid[i].line[m] == color && align < 4) {
+          if (this.room.grid[i].line[m] === color && align < 4) {
             align = align + 1;
             console.log('align', align, 'en', i + 1, m + 1);
           } else {
@@ -197,14 +198,15 @@ export class GameComponent implements OnInit {
           if (align > 0 && align < 4) {
             iBis = i + 1;
             mBis = m - 1;
-            
+
             while (align > 0 && align < 4) {
               console.log('test', align, 'en', iBis + 1, mBis + 1);
-              if (iBis < this.room.grid.length && mBis >= 0 && this.room.grid[iBis].line[mBis] == color && align < 4) {
+              if (iBis < this.room.grid.length && mBis >= 0 && this.room
+                .grid[iBis].line[mBis] === color && align < 4) {
                 align = align + 1;
                 mBis = mBis - 1;
                 iBis = iBis + 1;
-                console.log('align',align);
+                console.log('align', align);
               } else {
                 align = 0;
               }
