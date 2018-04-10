@@ -51,7 +51,7 @@ export class MatchmakingComponent implements OnInit {
       room.players = [player];
       room.turn = 0;
       room.grid = this.createGrid(6, 7);
-      
+
       this.db.collection('rooms')
         .add(JSON.parse(JSON.stringify(room)))
         .then((doc) => {
@@ -61,13 +61,13 @@ export class MatchmakingComponent implements OnInit {
   }
 
   createGrid(lin, col) {
-    const grid = [] ;
+    const grid = [];
     let i = 0;
     while (i < lin) {
-      grid[i] = { line : [] };
+      grid[i] = { line: [] };
       let m = 0;
       while (m < col) {
-        
+
         grid[i].line[m] = 'vide';
         m = m + 1;
       }
@@ -75,5 +75,9 @@ export class MatchmakingComponent implements OnInit {
     }
     console.log('grid');
     return grid;
+  }
+
+  mainMenu() {
+    this.router.navigate(['mainmenu']);
   }
 }
