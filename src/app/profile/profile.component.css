@@ -24,12 +24,12 @@
     font-size: 1.7em;
     text-align: center;
     color: white;
-    font-family: FreeMono, monospace;
+    font-family: monospace;
     font-weight: bold;
 }
 .winRate {
     text-align: center;
     color: goldenrod;
-    font-family: OCR A Std, monospace;
+    font-family: monospace;
     font-weight: bold;
 }
