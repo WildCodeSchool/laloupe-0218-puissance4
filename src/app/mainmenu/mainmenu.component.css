@@ -32,6 +32,7 @@
   height: 150%;
   position: relative;
   left: -25%;
+  bottom: 0;
 }
 
 .btn:hover {
