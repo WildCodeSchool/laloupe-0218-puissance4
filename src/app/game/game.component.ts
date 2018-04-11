@@ -35,7 +35,9 @@ export class GameComponent implements OnInit {
   roomId;
   yourTurn;
   user;
+  userAdvers;
   numPlayer;
+  numAdvers;
 
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('id');
@@ -49,20 +51,36 @@ export class GameComponent implements OnInit {
         .valueChanges()
         .subscribe((room) => {
           this.room = room;
+          if (this.room.players[0].name === this.authService.name.replace(/\s/g, '')) {
+            this.numPlayer = 0;
+            this.numAdvers = 1;
+            console.log('numPlayer = 0');
+          } else {
+            this.numPlayer = 1;
+            this.numAdvers = 0;
+            console.log('numPlayer = 1');
+          }
+          console.log(this.numAdvers);
+          console.log(this.room.players[0].id);
+          if (this.room.players.length > 1) {
+            console.log(this.room.players[this.numAdvers].id);
+            this.db
+              .doc('users/' + this.room.players[this.numAdvers].id)
+              .valueChanges()
+              .subscribe((user) => {
+                this.userAdvers = user;
+
+              });
+          }
         });
+
 
       this.db
         .doc('users/' + this.authService.user.uid)
         .valueChanges()
         .subscribe((user) => {
+          console.log('test');
           this.user = user;
-          if (this.room.players[0].name === this.authService.name.replace(/\s/g, '')) {
-            this.numPlayer = 0;
-            console.log('numPlayer = 0');
-          } else {
-            this.numPlayer = 1;
-            console.log('numPlayer = 1');
-          }
 
         });
     });
@@ -93,9 +111,9 @@ export class GameComponent implements OnInit {
 
   play(col) {
 
-    if (this.room.players[this.room.turn].name === 
-    this.authService.name.replace(/\s/g, '') && this.room.winner 
-    === -1 && this.room.players.length > 1) {
+    if (this.room.players[this.room.turn].name ===
+      this.authService.name.replace(/\s/g, '') && this.room.winner
+      === -1 && this.room.players.length > 1) {
       const i = 0;
       let m = this.room.grid.length - 1;
       let ok = false;
@@ -281,6 +299,15 @@ export class GameComponent implements OnInit {
     this.room.chat[this.room.chat.length] = this.room.players[this.numPlayer].name + ' : ' + text;
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
     
+  }
+
+  changeToken(img) {
+    if (img !== this.room.token[this.numAdvers]) {
+      this.room.token[this.numPlayer] = img;
+      this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+    } else {
+      alert('This token is already selected by your opponent.');
+    }
   }
 
 

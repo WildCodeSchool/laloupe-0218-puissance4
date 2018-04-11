@@ -23,6 +23,9 @@ export class MatchmakingComponent implements OnInit {
     private db: AngularFirestore) { }
 
   private authSubscription: Subscription;
+  
+  idUser;
+  user;
 
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {
@@ -30,6 +33,15 @@ export class MatchmakingComponent implements OnInit {
         this.router.navigate(['/']);
       }
       this.getRooms();
+    
+      this.idUser = authState.uid;
+      this.db
+        .doc('users/' + this.idUser)
+        .valueChanges()
+        .subscribe((user) => {
+          this.user = user;
+        });
+    
     });
   }
 
@@ -46,6 +58,7 @@ export class MatchmakingComponent implements OnInit {
 
         if (room.players.length === 1) {
           room.players.push(player);
+          room.players[1].id = this.user.uid;
           this.db.doc('rooms/' + roomId).update(JSON.parse(JSON.stringify(room)));
           this.router.navigate(['game', roomId, player.name]);
           return;
@@ -59,6 +72,8 @@ export class MatchmakingComponent implements OnInit {
       room.grid = this.createGrid(6, 7);
       room.winner = -1;
       room.end = false;
+      room.token = ['/assets/img/red-frog.png', '/assets/img/yellow-frog.png'];
+      room.players[0].id = this.user.uid;
       room.chat = ['Good luck !'];
 
       this.db.collection('rooms')
