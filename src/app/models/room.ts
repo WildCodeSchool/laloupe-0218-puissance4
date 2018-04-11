@@ -5,4 +5,5 @@ export class Room {
   turn: number;
   winner: number;
   grid: {line: string[]}[];
+  end: boolean;
 }

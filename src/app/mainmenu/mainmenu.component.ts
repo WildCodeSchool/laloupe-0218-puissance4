@@ -22,15 +22,24 @@ export class MainmenuComponent implements OnInit {
   ) {
   }
 
-  user = new User();
+  idUser;
+  user;
 
   ngOnInit() {
+
     this.afAuth.authState.subscribe((authState) => {
       if (authState == null) {
         this.router.navigate(['/']);
       }
+      this.idUser = authState.uid;
+      this.db
+        .doc('users/' + this.idUser)
+        .valueChanges()
+        .subscribe((user) => {
+          this.user = user;
+        });
+      
     });
-    this.takeData()
   }
 
   googleSignIn() {
@@ -41,6 +50,7 @@ export class MainmenuComponent implements OnInit {
   }
 
   createGame() {
+    this.takeData()
     this.router.navigate(['matchmaking']);
   }
   profile() {
@@ -48,12 +58,16 @@ export class MainmenuComponent implements OnInit {
   }
 
   takeData() {
-    this.user.name = this.authService.name;
-    this.user.img = this.authService.img;
-    this.user.uid = this.authService.uid;
-    this.user.nbrGame = 0;
-    this.user.nbrWins = 0;
-    this.user.nbrLoose = 0;
-    this.db.doc('users/' + this.user.uid).update(JSON.parse(JSON.stringify(this.user)));
+    if (this.user.nbrGame === 0) {
+      var user = { name: '', img: '', uid: '', nbrGame: '', nbrWins: '', nbrLoose: '' };
+
+      user.name = this.authService.user.displayName;
+      user.img = this.authService.user.photoURL;
+      user.uid = this.authService.user.uid;
+      user.nbrGame = this.authService.user.nbrGame;;
+      user.nbrWins = this.authService.user.nbrWins;
+      user.nbrLoose = this.authService.user.nbrLoose;
+      this.db.doc('users/' + this.authService.user.uid).set(user);
+    }
   }
 }
