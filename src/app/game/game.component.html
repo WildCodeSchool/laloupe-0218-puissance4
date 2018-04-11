@@ -4,10 +4,14 @@
       <div class="img-pion" *ngIf="cell != 'vide'">
         <div class="red" *ngIf="cell == 'red'">
           <div *ngIf="afAuth.authState | async as user" class="signOut">
-            <img src="{{ user.photoURL }}" width="50" height="50" class="red" />
+            <img src="{{ room.token[this.numPlayer] }}" width="50" height="50" class="red" />
           </div>
         </div>
-        <div class="yellow" *ngIf="cell == 'yellow'"></div>
+        <div class="yellow" *ngIf="cell == 'yellow'">
+          <div class="yellow" *ngIf="cell == 'yellow'">
+            <img src="{{room.token[numPlayer]}}" width="50" height="50" class="yellow" />
+          </div>
+        </div>
       </div>
 
     </div>
@@ -15,5 +19,19 @@
   <div class="win" *ngIf="this.room.winner != -1">
     Le joueur {{this.room.players[this.room.winner].name}} à gagné !
     <button (click)="menu()">Menu</button>
+  </div>
+  <div>
+    <div>
+      <img class="red" src="/assets/img/red-frog.png" />
+    </div>
+    <div>
+      <img class="yellow" src="/assets/img/yellow-frog.png" />
+    </div>
+    <div>
+      <img class="red" src="/assets/img/martin.jpg" />
+    </div>
+    <div>
+      <img class="yellow" src="/assets/img/victor.jpeg" />
+    </div>
   </div>
 </div>
