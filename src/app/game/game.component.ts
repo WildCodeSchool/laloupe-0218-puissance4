@@ -35,6 +35,7 @@ export class GameComponent implements OnInit {
   roomId;
   yourTurn;
   user;
+  userAdvers;
   numPlayer;
   numAdvers;
 
@@ -52,6 +53,12 @@ export class GameComponent implements OnInit {
           this.room = room;
         });
 
+      this.db
+        .doc('users/' + this.authService.user.uid)
+        .valueChanges()
+        .subscribe((user) => {
+          this.userAdvers = user;
+        });
       this.db
         .doc('users/' + this.authService.user.uid)
         .valueChanges()
@@ -97,9 +104,9 @@ export class GameComponent implements OnInit {
 
   play(col) {
 
-    if (this.room.players[this.room.turn].name === 
-    this.authService.name.replace(/\s/g, '') && this.room.winner 
-    === -1 && this.room.players.length > 1) {
+    if (this.room.players[this.room.turn].name ===
+      this.authService.name.replace(/\s/g, '') && this.room.winner
+      === -1 && this.room.players.length > 1) {
       const i = 0;
       let m = this.room.grid.length - 1;
       let ok = false;

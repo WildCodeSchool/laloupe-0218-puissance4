@@ -29,3 +29,8 @@
     border-radius: 2cm;
     background-color: yellow;
 }
+.img-player{
+    width: 120px;
+    height: 120px;
+    border-radius: 5cm;
+}
