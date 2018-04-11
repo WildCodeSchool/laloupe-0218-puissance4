@@ -13,6 +13,7 @@ import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { GameComponent } from './game/game.component';
 import { MatchmakingComponent } from './matchmaking/matchmaking.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthService } from './auth.service';
 
 
 const appRoutes: Routes = [
@@ -47,7 +48,7 @@ const appRoutes: Routes = [
       { enableTracing: true },
     ),
   ],
-  providers: [AngularFireAuth, AngularFirestore],
+  providers: [AngularFireAuth, AngularFirestore, AuthService],
   bootstrap: [AppComponent],
 
 

@@ -4,6 +4,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Room } from '../models/room';
+import { Subscription, TimeInterval } from 'rxjs/Rx';
+import { AuthService } from './../auth.service';
+import { timeout } from 'rxjs/operator/timeout';
+import { timeoutWith, timeInterval } from 'rxjs/operators';
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -15,16 +20,19 @@ export class GameComponent implements OnInit {
     public afAuth: AngularFireAuth,
     private route: ActivatedRoute,
     private router: Router,
-    private db: AngularFirestore) {
+    private db: AngularFirestore,
+    private authService: AuthService) {
 
   }
 
+  private authSubscription: Subscription;
   private roomCollection: AngularFirestoreCollection<any>;
   roomOb: Observable<any[]>;
   room = new Room();
   win: boolean;
   colorWin: string;
   roomId;
+  yourTurn;
 
   ngOnInit() {
 
@@ -33,7 +41,7 @@ export class GameComponent implements OnInit {
       if (authState == null) {
         this.router.navigate(['/']);
       }
-      console.log(this.roomId);
+      
     });
 
     this.db
@@ -41,45 +49,46 @@ export class GameComponent implements OnInit {
       .valueChanges()
       .subscribe((room) => {
         this.room = room;
-
       });
 
 
   }
 
-
-
   changeTurn() {
-
     this.room.turn = this.room.turn === 0 ? 1 : 0;
-    console.log(this.room.turn);
+    console.log('turn', this.room.turn);
+    console.log(this.room.players[this.room.turn].name);
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
   }
 
   play(col) {
-    const i = 0;
-    let m = this.room.grid.length - 1;
-    let ok = false;
-    if (this.room.grid[0].line[col] !== 'vide') {
-      console.log('You can\'t play here');
-    } else {
-      while (!ok) {
-        if (this.room.grid[m].line[col] !== 'vide' && m > 0) {
-          m = m - 1;
-
-        } else {
-          ok = true;
-
-        }
-      }
-      if (this.room.turn === 0) {
-        this.room.grid[m].line[col] = 'red';
+    console.log(this.room.turn);
+    console.log(this.room.players[this.room.turn].name);
+    if (this.room.players[this.room.turn].name === this.authService.name.replace(/\s/g, '')) { 
+      const i = 0;
+      let m = this.room.grid.length - 1;
+      let ok = false;
+      if (this.room.grid[0].line[col] !== 'vide') {
+        console.log('You can\'t play here');
       } else {
-        this.room.grid[m].line[col] = 'yellow';
-      }
-      this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
-      this.verifvictory();
-      this.changeTurn();
+        while (!ok) {
+          if (this.room.grid[m].line[col] !== 'vide' && m > 0) {
+            m = m - 1;
+
+          } else {
+            ok = true;
+
+          }
+        }
+        if (this.room.turn === 0) {
+          this.room.grid[m].line[col] = 'red';
+        } else {
+          this.room.grid[m].line[col] = 'yellow';
+        }
+        this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+        this.verifvictory();
+        
+      } 
     }
   }
 
@@ -149,16 +158,16 @@ export class GameComponent implements OnInit {
 
           if (this.room.grid[i].line[m] === color && align < 4) {
             align = align + 1;
-            console.log('align', align, 'en', i + 1, m + 1);
+           
           } else {
             align = 0;
           }
           if (align > 0 && align < 4) {
             iBis = i + 1;
             mBis = m + 1;
-            console.log('test', align, 'en', iBis + 1, mBis + 1);
+            
             while (align > 0 && align < 4) {
-              console.log(iBis, mBis);
+            
               if (iBis < this.room.grid.length && this.room
                 .grid[iBis].line[mBis] === color && align < 4) {
                 align = align + 1;
@@ -191,7 +200,7 @@ export class GameComponent implements OnInit {
 
           if (this.room.grid[i].line[m] === color && align < 4) {
             align = align + 1;
-            console.log('align', align, 'en', i + 1, m + 1);
+          
           } else {
             align = 0;
           }
@@ -200,13 +209,13 @@ export class GameComponent implements OnInit {
             mBis = m - 1;
 
             while (align > 0 && align < 4) {
-              console.log('test', align, 'en', iBis + 1, mBis + 1);
+             
               if (iBis < this.room.grid.length && mBis >= 0 && this.room
                 .grid[iBis].line[mBis] === color && align < 4) {
                 align = align + 1;
                 mBis = mBis - 1;
                 iBis = iBis + 1;
-                console.log('align', align);
+               
               } else {
                 align = 0;
               }
@@ -221,13 +230,17 @@ export class GameComponent implements OnInit {
     }
 
     if (align >= 4) {
-      console.log(color + 'WIN !');
-      this.colorWin = color;
-      this.win = true;
+      this.room.winner = this.room.turn; 
+      this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+      console.log(this.room.players[this.room.winner].name + 'WIN !');
+    } else {
+      this.changeTurn();
     }
   }
 
-
+  menu() {
+    this.router.navigate(['mainmenu']);
+  }
 
 
 

@@ -5,16 +5,47 @@
   padding-left: 15px;
   padding-right: 15px;
   width: 400px;
+  transition: all 0.15s ease-in-out;
   -ms-transform: skewX(-20deg);
   -webkit-transform: skewX(-20deg);
   transform: skewX(-20deg);
 }
 
-img {
-  margin-bottom: -75px;
+.btnVictor {
+  background-color: #D3D3D3;
+  border: solid black 3px;
+  margin-top: 15px;
+  transition: all 0.15s ease-in-out;
+  -ms-transform: skewX(-20deg);
+  -webkit-transform: skewX(-20deg);
+  transform: skewX(-20deg);
 }
 
-#panel {
-  display: none;
+.btnVictor:hover {
+  width: 35px;
+  background-color: black;
+  color: white;
+}
+
+.victor {
+  width: 150%;
+  height: 150%;
+  position: relative;
+  left: -25%;
+  bottom: 50px;
+}
+
+.btn:hover {
+  width: 450px;
+  background-color: black;
+  color: white;
+}
+
+img {
+  margin-bottom: -75px;
+  margin-top: -15px;
+}
+
+.credits {
   margin-top: 100px;
 }
