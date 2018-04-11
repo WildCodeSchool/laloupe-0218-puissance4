@@ -14,16 +14,35 @@ export class ProfileComponent implements OnInit {
   constructor(
     public afAuth: AngularFireAuth,
     private router: Router,
-    private db: AngularFirestore) { this.items = db.collection('items').valueChanges(); }
+    private db: AngularFirestore,
+      ) { this.items = db.collection('items').valueChanges(); }
 
+  user;
+  nbrGame: string;
+  nbrWins;
+  nbrLoose;
+  userId;
 
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {
+      this.userId = authState.uid;
       if (authState == null) {
         this.router.navigate(['/']);
       }
+      
+      this.db
+      .doc('users/' + this.userId)
+      .valueChanges()
+      .subscribe((user) => {
+        this.user = user;
+        this.nbrGame = '' + this.user.nbrGame;
+        this.nbrWins = '' + this.user.nbrWins;
+        this.nbrLoose = '' + this.user.nbrLoose;
+      });
+      
     });
   }
+
   mainMenu() {
     this.router.navigate(['mainmenu']);
   }

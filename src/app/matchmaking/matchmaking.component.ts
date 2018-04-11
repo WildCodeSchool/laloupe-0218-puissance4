@@ -54,9 +54,12 @@ export class MatchmakingComponent implements OnInit {
 
       const room = new Room();
       room.players = [player];
+      room.players[0].finish = false;
       room.turn = 0;
       room.grid = this.createGrid(6, 7);
-      room.winner = 2;
+      room.winner = -1;
+      room.end = false;
+      room.chat = ['Good luck !'];
 
       this.db.collection('rooms')
         .add(JSON.parse(JSON.stringify(room)))

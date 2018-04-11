@@ -7,7 +7,7 @@ import { Room } from '../models/room';
 import { Subscription, TimeInterval } from 'rxjs/Rx';
 import { AuthService } from './../auth.service';
 import { timeout } from 'rxjs/operator/timeout';
-import { timeoutWith, timeInterval } from 'rxjs/operators';
+import { timeoutWith, timeInterval, throttleTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game',
@@ -28,43 +28,74 @@ export class GameComponent implements OnInit {
   private authSubscription: Subscription;
   private roomCollection: AngularFirestoreCollection<any>;
   roomOb: Observable<any[]>;
-  room = new Room();
+  room: Room;
+
   win: boolean;
   colorWin: string;
   roomId;
   yourTurn;
+  user;
+  numPlayer;
 
   ngOnInit() {
-
     this.roomId = this.route.snapshot.paramMap.get('id');
-    this.afAuth.authState.subscribe((authState) => {
-      if (authState == null) {
-        this.router.navigate(['/']);
+
+    this.authService.authstate.take(1).subscribe((authstate) => {
+      if (!authstate) {
+        return;
       }
-      
+      this.db
+        .doc<Room>('rooms/' + this.roomId)
+        .valueChanges()
+        .subscribe((room) => {
+          this.room = room;
+        });
+
+      this.db
+        .doc('users/' + this.authService.user.uid)
+        .valueChanges()
+        .subscribe((user) => {
+          this.user = user;
+          if (this.room.players[0].name === this.authService.name.replace(/\s/g, '')) {
+            this.numPlayer = 0;
+            console.log('numPlayer = 0');
+          } else {
+            this.numPlayer = 1;
+            console.log('numPlayer = 1');
+          }
+
+        });
     });
+  }
 
-    this.db
-      .doc<Room>('rooms/' + this.roomId)
-      .valueChanges()
-      .subscribe((room) => {
-        this.room = room;
-      });
+  ngOnDestroy() {
+    if (this.room.end && !this.room.players[this.numPlayer].finish) {
+      console.log('test');
+      this.user.nbrGame = this.user.nbrGame + 1;
+      this.room.players[this.numPlayer].finish = true;
 
+      if (this.room.players[this.room.turn].name === this.room.players[this.numPlayer].name) {
+        this.user.nbrWins = this.user.nbrWins + 1;
+      } else {
+        this.user.nbrLoose = this.user.nbrLoose + 1;
+      }
+      this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+      this.db.doc('users/' + this.authService.user.uid).update(this.user);
+    }
 
   }
 
   changeTurn() {
     this.room.turn = this.room.turn === 0 ? 1 : 0;
-    console.log('turn', this.room.turn);
-    console.log(this.room.players[this.room.turn].name);
+
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
   }
 
   play(col) {
-    console.log(this.room.turn);
-    console.log(this.room.players[this.room.turn].name);
-    if (this.room.players[this.room.turn].name === this.authService.name.replace(/\s/g, '')) { 
+
+    if (this.room.players[this.room.turn].name === 
+    this.authService.name.replace(/\s/g, '') && this.room.winner 
+    === -1 && this.room.players.length > 1) {
       const i = 0;
       let m = this.room.grid.length - 1;
       let ok = false;
@@ -87,8 +118,8 @@ export class GameComponent implements OnInit {
         }
         this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
         this.verifvictory();
-        
-      } 
+
+      }
     }
   }
 
@@ -158,16 +189,16 @@ export class GameComponent implements OnInit {
 
           if (this.room.grid[i].line[m] === color && align < 4) {
             align = align + 1;
-           
+
           } else {
             align = 0;
           }
           if (align > 0 && align < 4) {
             iBis = i + 1;
             mBis = m + 1;
-            
+
             while (align > 0 && align < 4) {
-            
+
               if (iBis < this.room.grid.length && this.room
                 .grid[iBis].line[mBis] === color && align < 4) {
                 align = align + 1;
@@ -200,7 +231,7 @@ export class GameComponent implements OnInit {
 
           if (this.room.grid[i].line[m] === color && align < 4) {
             align = align + 1;
-          
+
           } else {
             align = 0;
           }
@@ -209,13 +240,13 @@ export class GameComponent implements OnInit {
             mBis = m - 1;
 
             while (align > 0 && align < 4) {
-             
+
               if (iBis < this.room.grid.length && mBis >= 0 && this.room
                 .grid[iBis].line[mBis] === color && align < 4) {
                 align = align + 1;
                 mBis = mBis - 1;
                 iBis = iBis + 1;
-               
+
               } else {
                 align = 0;
               }
@@ -230,7 +261,8 @@ export class GameComponent implements OnInit {
     }
 
     if (align >= 4) {
-      this.room.winner = this.room.turn; 
+      this.room.end = true;
+      this.room.winner = this.room.turn;
       this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
       console.log(this.room.players[this.room.winner].name + 'WIN !');
     } else {
@@ -240,6 +272,15 @@ export class GameComponent implements OnInit {
 
   menu() {
     this.router.navigate(['mainmenu']);
+  }
+
+  chat(text) {
+  
+    console.log(text);
+    
+    this.room.chat[this.room.chat.length] = this.room.players[this.numPlayer].name + ' : ' + text;
+    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+    
   }
 
 

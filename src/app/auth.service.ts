@@ -5,31 +5,21 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AuthService {
 
-  authId: string;
+  user;
   name: string;
-  
+  authstate;
 
   constructor(private afAuth: AngularFireAuth) {
+    this.authstate = this.afAuth.authState;
+
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.authId = user.uid;
+        this.user = user;
         this.name = user.displayName;
       } else {
-        this.authId = null;
-        this.name = null;
+        this.user = null;
       }
+      console.log(this.user);
     });
-  }
-
-  get authState() {
-    return this.afAuth.authState;
-  }
-
-  login() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  }
-
-  logout() {
-    this.afAuth.auth.signOut();
   }
 }
