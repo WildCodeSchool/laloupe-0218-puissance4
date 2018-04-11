@@ -45,7 +45,6 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true },
     ),
   ],
   providers: [AngularFireAuth, AngularFirestore, AuthService],

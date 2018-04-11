@@ -50,7 +50,8 @@ export class MainmenuComponent implements OnInit {
   }
 
   createGame() {
-    this.takeData()
+    
+    this.takeData();
     this.router.navigate(['matchmaking']);
   }
   profile() {
@@ -58,15 +59,15 @@ export class MainmenuComponent implements OnInit {
   }
 
   takeData() {
-    if (this.user.nbrGame === 0) {
-      var user = { name: '', img: '', uid: '', nbrGame: '', nbrWins: '', nbrLoose: '' };
-
-      user.name = this.authService.user.displayName;
-      user.img = this.authService.user.photoURL;
-      user.uid = this.authService.user.uid;
-      user.nbrGame = this.authService.user.nbrGame;;
-      user.nbrWins = this.authService.user.nbrWins;
-      user.nbrLoose = this.authService.user.nbrLoose;
+    if (!this.user) {
+      const user = {
+        name: this.authService.user.displayName,
+        img: this.authService.user.photoURL,
+        uid: this.authService.user.uid,
+        nbrGame: 0,
+        nbrWins: 0,
+        nbrLoose: 0,
+      };
       this.db.doc('users/' + this.authService.user.uid).set(user);
     }
   }

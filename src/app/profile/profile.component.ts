@@ -31,13 +31,13 @@ export class ProfileComponent implements OnInit {
       }
       
       this.db
-      .doc('users/' + this.userId )
+      .doc('users/' + this.userId)
       .valueChanges()
       .subscribe((user) => {
         this.user = user;
-        this.nbrGame = '' + this.user.nbrGame
-        this.nbrWins = '' + this.user.nbrWins
-        this.nbrLoose = '' + this.user.nbrLoose
+        this.nbrGame = '' + this.user.nbrGame;
+        this.nbrWins = '' + this.user.nbrWins;
+        this.nbrLoose = '' + this.user.nbrLoose;
       });
       
     });

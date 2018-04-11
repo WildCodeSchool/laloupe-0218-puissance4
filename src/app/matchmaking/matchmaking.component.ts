@@ -57,7 +57,7 @@ export class MatchmakingComponent implements OnInit {
       room.players[0].finish = false;
       room.turn = 0;
       room.grid = this.createGrid(6, 7);
-      room.winner = 2;
+      room.winner = -1;
       room.end = false;
 
       this.db.collection('rooms')
