@@ -36,6 +36,7 @@ export class GameComponent implements OnInit {
   yourTurn;
   user;
   numPlayer;
+  numAdvers;
 
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('id');
@@ -55,12 +56,15 @@ export class GameComponent implements OnInit {
         .doc('users/' + this.authService.user.uid)
         .valueChanges()
         .subscribe((user) => {
+          console.log('test');
           this.user = user;
           if (this.room.players[0].name === this.authService.name.replace(/\s/g, '')) {
             this.numPlayer = 0;
+            this.numAdvers = 1;
             console.log('numPlayer = 0');
           } else {
             this.numPlayer = 1;
+            this.numAdvers = 0;
             console.log('numPlayer = 1');
           }
 
@@ -284,6 +288,15 @@ export class GameComponent implements OnInit {
     }
     this.db.doc('users/' + this.user.uid).update(this.user);
 
+  }
+
+  changeToken(img) {
+    if (img !== this.room.token[this.numAdvers]) {
+      this.room.token[this.numPlayer] = img;
+      this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+    } else {
+      alert('This token is already selected by your opponent.');
+    }
   }
 
 

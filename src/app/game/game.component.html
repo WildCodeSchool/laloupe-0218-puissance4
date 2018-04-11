@@ -4,12 +4,12 @@
       <div class="img-pion" *ngIf="cell != 'vide'">
         <div class="red" *ngIf="cell == 'red'">
           <div *ngIf="afAuth.authState | async as user" class="signOut">
-            <img src="{{ room.token[this.numPlayer] }}" width="50" height="50" class="red" />
+            <img src="{{ room.token[0] }}" width="50" height="50" class="red" />
           </div>
         </div>
         <div class="yellow" *ngIf="cell == 'yellow'">
           <div class="yellow" *ngIf="cell == 'yellow'">
-            <img src="{{room.token[numPlayer]}}" width="50" height="50" class="yellow" />
+            <img src="{{room.token[1]}}" width="50" height="50" class="yellow" />
           </div>
         </div>
       </div>
@@ -22,16 +22,16 @@
   </div>
   <div>
     <div>
-      <img class="red" src="/assets/img/red-frog.png" />
+      <img class="red" src="/assets/img/red-frog.png" (click)="changeToken('/assets/img/red-frog.png')" />
     </div>
     <div>
-      <img class="yellow" src="/assets/img/yellow-frog.png" />
+      <img class="yellow" src="/assets/img/yellow-frog.png" (click)="changeToken('/assets/img/yellow-frog.png')" />
     </div>
     <div>
-      <img class="red" src="/assets/img/martin.jpg" />
+      <img class="red" src="/assets/img/martin.jpg" (click)="changeToken('/assets/img/martin.jpg')" />
     </div>
     <div>
-      <img class="yellow" src="/assets/img/victor.jpeg" />
+      <img class="yellow" src="/assets/img/victor.jpeg" (click)="changeToken('/assets/img/victor.jpeg')" />
     </div>
   </div>
 </div>
