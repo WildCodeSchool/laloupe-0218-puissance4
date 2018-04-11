@@ -72,7 +72,7 @@ export class MatchmakingComponent implements OnInit {
       room.grid = this.createGrid(6, 7);
       room.winner = -1;
       room.end = false;
-      room.token = ['/assets/img/red-frog.png', '/assets/img/yellow-frog.png'];
+      room.token = ['./assets/img/red-frog.png', './assets/img/yellow-frog.png'];
       room.players[0].id = this.user.uid;
       room.chat = ['Good luck !'];
 

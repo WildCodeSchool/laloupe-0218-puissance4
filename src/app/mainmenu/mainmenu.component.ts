@@ -33,7 +33,7 @@ export class MainmenuComponent implements OnInit {
       }
       this.idUser = authState.uid;
       this.db
-        .doc('users/' + this.idUser)
+        .doc('users/' + authState.uid)
         .valueChanges()
         .subscribe((user) => {
           this.user = user;

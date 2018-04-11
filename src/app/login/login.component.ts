@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
     this.afAuth.authState.subscribe((authState) => {
       if (authState) {
         this.router.navigate(['mainmenu']);
-        document.getElementById('invisible').style.display = 'signin';
       }
       if (authState == null) {
         document.getElementById('signout').style.display = 'none';
