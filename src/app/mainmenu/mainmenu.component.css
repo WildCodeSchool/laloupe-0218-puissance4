@@ -41,11 +41,16 @@
   color: white;
 }
 
-img {
+.p4-logo {
   margin-bottom: -75px;
   margin-top: -15px;
 }
 
 .credits {
   margin-top: 100px;
+}
+
+.modalImg {
+  width: 150px;
+  height: 150px;
 }
