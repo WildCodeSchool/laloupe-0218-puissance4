@@ -21,17 +21,23 @@
     <button (click)="menu()">Menu</button>
   </div>
   <div>
+      <div>
+          <img class="red" src="{{user.img}}" (click)="changeToken(user.img)" />
+        </div>
     <div>
-      <img class="red" src="/assets/img/red-frog.png" (click)="changeToken('/assets/img/red-frog.png')" />
+      <img class="red" src="./assets/img/red-frog.png" (click)="changeToken('./assets/img/red-frog.png')" />
     </div>
     <div>
-      <img class="yellow" src="/assets/img/yellow-frog.png" (click)="changeToken('/assets/img/yellow-frog.png')" />
+      <img class="yellow" src="./assets/img/yellow-frog.png" (click)="changeToken('./assets/img/yellow-frog.png')" />
     </div>
     <div>
-      <img class="red" src="/assets/img/martin.jpg" (click)="changeToken('/assets/img/martin.jpg')" />
+      <img class="red" src="./assets/img/martin.jpg" (click)="changeToken('./assets/img/martin.jpg')" />
     </div>
     <div>
-      <img class="yellow" src="/assets/img/victor.jpeg" (click)="changeToken('/assets/img/victor.jpeg')" />
+      <img class="yellow" src="./assets/img/victor.jpeg" (click)="changeToken('./assets/img/victor.jpeg')" />
     </div>
   </div>
 </div>
+
+<div class="player1"></div>
+<div class="player2"></div>
