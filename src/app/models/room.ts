@@ -6,4 +6,6 @@ export class Room {
   winner: number;
   grid: {line: string[]}[];
   end: boolean;
+  chat = [];
+
 }

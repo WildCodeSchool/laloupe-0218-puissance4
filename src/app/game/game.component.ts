@@ -274,16 +274,10 @@ export class GameComponent implements OnInit {
     this.router.navigate(['mainmenu']);
   }
 
-  stat() {
-    console.log(this.user.nbrGame);
-    this.user.nbrGame = this.user.nbrGame + 1;
-    if (this.room.players[this.room.turn].name === this.authService.name.replace(/\s/g, '')) {
-      this.user.nbrWins = this.user.nbrWins + 1;
-    } else {
-      this.user.nbrLoose = this.user.nbrLoose + 1;
-    }
-    this.db.doc('users/' + this.user.uid).update(this.user);
-
+  chat(text) {
+    console.log(text);
+    this.room.chat[this.room.chat.length] = this.room.players[this.numPlayer].name + ' : ' + text;
+    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
   }
 
 
