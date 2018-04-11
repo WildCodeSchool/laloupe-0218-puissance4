@@ -43,9 +43,11 @@
 </div>
 
 <div class="player1">
+  {{user.name}}
     <img *ngIf="user" class="img-player" src="{{user.img}}" />
 </div>
 
 <div *ngIf="userAdvers" class="player2">
+  {{userAdvers.name}}
     <img class="img-player" src='{{userAdvers.img}}' />
 </div>
