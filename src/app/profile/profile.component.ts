@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
       ) { this.items = db.collection('items').valueChanges(); }
 
   user;
-  nbrGame: string;
+  nbrGame;
   nbrWins;
   nbrLoose;
   userId;
