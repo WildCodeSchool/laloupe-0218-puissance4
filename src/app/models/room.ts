@@ -7,4 +7,6 @@ export class Room {
   grid: {line: string[]}[];
   end: boolean;
   token = [];
+  chat = [];
+
 }

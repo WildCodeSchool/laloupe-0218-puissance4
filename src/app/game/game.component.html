@@ -1,3 +1,6 @@
+<div *ngIf="this.room.turn === numPlayer">
+A toi de jouer !
+</div>
 <div class="boardGame" *ngIf="room">
   <div class="line " *ngFor="let line of room.grid">
     <div class="cell" *ngFor="let cell of line.line; let i = index" (click)='play(i)'>
@@ -39,6 +42,11 @@
     <div>
       <img class="yellow" src="./assets/img/nyanCat.jpeg" (click)="changeToken('./assets/img/nyanCat.jpeg')" />
     </div>
+    <div *ngFor="let text of room.chat">
+      {{text}}
+    </div>
+    <button (click)="chat(box.value)"> Send Message</button>
+    <input #box (keyup.enter)="chat(box.value)">
   </div>
 </div>
 

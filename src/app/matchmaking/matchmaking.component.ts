@@ -74,6 +74,7 @@ export class MatchmakingComponent implements OnInit {
       room.end = false;
       room.token = ['/assets/img/red-frog.png', '/assets/img/yellow-frog.png'];
       room.players[0].id = this.user.uid;
+      room.chat = ['Good luck !'];
 
       this.db.collection('rooms')
         .add(JSON.parse(JSON.stringify(room)))
