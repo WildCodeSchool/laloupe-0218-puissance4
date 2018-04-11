@@ -40,7 +40,7 @@ export class MainmenuComponent implements OnInit {
           this.user = user;
           this.ok = true;
         });
-      
+
     });
   }
 
@@ -53,12 +53,15 @@ export class MainmenuComponent implements OnInit {
 
   createGame() {
     if (this.ok === true) {
-    this.takeData();
-    this.router.navigate(['matchmaking']);
+      this.takeData();
+      this.router.navigate(['matchmaking']);
     }
   }
   profile() {
-    this.router.navigate(['profile']);
+    if (this.ok === true) {
+      this.takeData();
+      this.router.navigate(['profile']);
+    }
   }
 
   takeData() {
