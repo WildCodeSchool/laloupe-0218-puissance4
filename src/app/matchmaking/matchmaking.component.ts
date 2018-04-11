@@ -24,8 +24,8 @@ export class MatchmakingComponent implements OnInit {
 
   private authSubscription: Subscription;
   
-    idUser;
-    user;
+  idUser;
+  user;
 
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {

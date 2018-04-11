@@ -51,20 +51,6 @@ export class GameComponent implements OnInit {
         .valueChanges()
         .subscribe((room) => {
           this.room = room;
-        });
-
-      this.db
-        .doc('users/' + this.authService.user.uid)
-        .valueChanges()
-        .subscribe((user) => {
-          this.userAdvers = user;
-        });
-      this.db
-        .doc('users/' + this.authService.user.uid)
-        .valueChanges()
-        .subscribe((user) => {
-          console.log('test');
-          this.user = user;
           if (this.room.players[0].name === this.authService.name.replace(/\s/g, '')) {
             this.numPlayer = 0;
             this.numAdvers = 1;
@@ -74,6 +60,27 @@ export class GameComponent implements OnInit {
             this.numAdvers = 0;
             console.log('numPlayer = 1');
           }
+          console.log(this.numAdvers);
+          console.log(this.room.players[0].id);
+          if (this.room.players.length > 1) {
+            console.log(this.room.players[this.numAdvers].id);
+            this.db
+              .doc('users/' + this.room.players[this.numAdvers].id)
+              .valueChanges()
+              .subscribe((user) => {
+                this.userAdvers = user;
+
+              });
+          }
+        });
+
+
+      this.db
+        .doc('users/' + this.authService.user.uid)
+        .valueChanges()
+        .subscribe((user) => {
+          console.log('test');
+          this.user = user;
 
         });
     });

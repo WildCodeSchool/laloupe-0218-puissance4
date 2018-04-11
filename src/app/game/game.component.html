@@ -21,7 +21,7 @@
     <button (click)="menu()">Menu</button>
   </div>
   <div>
-    <div>
+    <div *ngIf="user">
       <img class="red" src="{{user.img}}" (click)="changeToken(user.img)" />
     </div>
     <div>
@@ -43,8 +43,9 @@
 </div>
 
 <div class="player1">
-    <img class="img-player" src="{{user.img}}" (click)="changeToken(user.img)" />
+    <img *ngIf="user" class="img-player" src="{{user.img}}" />
 </div>
-<div class="player2">
-    <img class="img-player" src="{{userAdvers.img}}" (click)="changeToken(userAdvers.img)" />
+
+<div *ngIf="userAdvers" class="player2">
+    <img class="img-player" src='{{userAdvers.img}}' />
 </div>
