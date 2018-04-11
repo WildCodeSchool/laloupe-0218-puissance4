@@ -1,3 +1,6 @@
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AuthService } from './../auth.service';
+import { User } from './../models/user';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
@@ -13,7 +16,11 @@ export class LoginComponent implements OnInit {
   constructor(
     public afAuth: AngularFireAuth,
     private router: Router,
+    
   ) { }
+
+
+  
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {
       if (authState) {
@@ -27,7 +34,6 @@ export class LoginComponent implements OnInit {
   }
   googleSignIn() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    const signout = document.getElementById('messagesUtilisateur');
   }
   signOut() {
     this.afAuth.auth.signOut();
