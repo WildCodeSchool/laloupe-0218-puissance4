@@ -24,8 +24,11 @@ A toi de jouer !
     Le joueur {{this.room.players[this.room.winner].name}} à gagné !
     <button (click)="menu()">Menu</button>
   </div>
+  <div class="nul" *ngIf="this.room.end === true && this.room.winner === -1">
+      Egalité
+  </div>
   <div>
-    <div *ngIf="user">
+    <div *ngIf="user && this.user.levels > 4">
       <img class="red" src="{{user.img}}" (click)="changeToken(user.img)" />
     </div>
     <div>
@@ -34,13 +37,13 @@ A toi de jouer !
     <div>
       <img class="yellow" src="./assets/img/yellow-frog.png" (click)="changeToken('./assets/img/yellow-frog.png')" />
     </div>
-    <div>
+    <div *ngIf="this.user.levels > 10">
       <img class="red" src="./assets/img/martin.jpg" (click)="changeToken('./assets/img/martin.jpg')" />
     </div>
-    <div>
+    <div *ngIf="this.user.levels > 10">
       <img class="yellow" src="./assets/img/victor.jpeg" (click)="changeToken('./assets/img/victor.jpeg')" />
     </div>
-    <div>
+    <div *ngIf="this.user.levels > 15">
       <img class="yellow" src="./assets/img/nyanCat.jpeg" (click)="changeToken('./assets/img/nyanCat.jpeg')" />
     </div>
     <div *ngFor="let text of room.chat">
@@ -50,6 +53,7 @@ A toi de jouer !
     <input #box (keyup.enter)="chat(box.value)">
   </div>
 </div>
+<div (click)="backMenu()" *ngIf="room.players.length != 2">Back Menu</div>
 
 <div class="player1" *ngIf="user" >
   {{user.name}}

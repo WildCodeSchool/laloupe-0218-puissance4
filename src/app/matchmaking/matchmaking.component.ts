@@ -23,25 +23,27 @@ export class MatchmakingComponent implements OnInit {
     private db: AngularFirestore) { }
 
   private authSubscription: Subscription;
-  
+
   idUser;
   user;
+  ok;
 
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {
       if (authState == null) {
         this.router.navigate(['/']);
       }
-      this.getRooms();
-    
+
+
       this.idUser = authState.uid;
       this.db
         .doc('users/' + this.idUser)
         .valueChanges()
         .subscribe((user) => {
           this.user = user;
+          this.getRooms();
         });
-    
+
     });
   }
 
@@ -82,8 +84,8 @@ export class MatchmakingComponent implements OnInit {
           this.router.navigate(['game', doc.id, player.name]);
         });
     });
-  }
 
+  }
   createGrid(lin, col) {
     const grid = [];
     let i = 0;
@@ -104,4 +106,6 @@ export class MatchmakingComponent implements OnInit {
   mainMenu() {
     this.router.navigate(['mainmenu']);
   }
+
 }
+
