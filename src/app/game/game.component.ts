@@ -312,7 +312,7 @@ export class GameComponent implements OnInit {
   }
 
   showTokens() {
-    if (this.showToken === false) {
+    if (!this.showToken) {
       this.showToken = true;
     } else { this.showToken = false; }
   }
