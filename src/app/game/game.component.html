@@ -11,8 +11,8 @@
         Le joueur {{this.room.players[this.room.winner].name}} à gagné !
       </div>
       <div class="oppTurn" *ngIf="this.room.end === true && this.room.winner === -1">
-      Stalemate !
-  </div>
+        Stalemate !
+      </div>
     </div>
     <div class="row justify-content-center">
       <!-- Player Cards -->
@@ -90,7 +90,7 @@
             <p class="tokenText" (click)="showTokens()">Choose your weapon !</p>
           </div>
         </div>
-        <div class="row justify-content-center" *ngIf="showToken === true">
+        <div class="row justify-content-center token-board" *ngIf="showToken === true">
           <div *ngIf="user ">
             <img class="tokenSelect " src="{{user.img}} " (click)="changeToken(user.img) " />
           </div>
@@ -101,6 +101,14 @@
           <div>
             <img class="tokenSelect " alt="yellow-frog " src="./assets/img/yellow-frog.png " (click)="changeToken(
       './assets/img/yellow-frog.png') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="deer" src="./assets/img/deer.png " (click)="changeToken(
+        './assets/img/deer.png') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="download" src="./assets/img/download.png " (click)="changeToken(
+          './assets/img/download.png') " />
           </div>
           <div>
             <img class="tokenSelect " alt="martin " src="./assets/img/martin.jpg " (click)="changeToken(
@@ -134,9 +142,16 @@
             <img class="tokenSelect " alt="vortex " src="./assets/img/vortex.gif" (click)="changeToken(
           './assets/img/vortex.gif') " />
           </div>
+          <div>
+            <img class="tokenSelect " alt="epileptique " src="./assets/img/epileptique.gif" (click)="changeToken(
+            './assets/img/epileptique.gif') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="goldfish " src="./assets/img/goldfishdrib.gif" (click)="changeToken(
+              './assets/img/goldfishdrib.gif') " />
+          </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
