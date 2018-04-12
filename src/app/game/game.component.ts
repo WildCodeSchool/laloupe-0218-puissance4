@@ -87,12 +87,13 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.room.players.length != 2) {
+    console.log('ngdestroy');
+    if (this.room.players.length !== 2) {
       this.room.players[1] = {
         finish: false,
         name: 'undefind',
-        id: 'undefind'
-      }
+        id: 'undefind',
+      };
 
 
     }
@@ -103,6 +104,8 @@ export class GameComponent implements OnInit, OnDestroy {
       this.room.players[this.numPlayer].finish = true;
 
     }
+    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+    this.db.doc('users/' + this.authService.user.uid).set(this.user);
     
   }
 
@@ -280,7 +283,7 @@ export class GameComponent implements OnInit, OnDestroy {
       }
     }
 
-    //vérif égalité 
+    // vérif égalité 
 
     let tr = 0;
     let verif = 0;
@@ -328,12 +331,12 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   backMenu() {
-    if (this.room.players.length != 2) {
+    if (this.room.players.length !== 2) {
       this.room.players[1] = {
         finish: false,
         name: 'undefind',
-        id: 'undefind'
-      }
+        id: 'undefind',
+      };
     }
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
     this.router.navigate(['mainmenu']);
