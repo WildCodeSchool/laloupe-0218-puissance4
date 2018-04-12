@@ -321,7 +321,13 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   menu() {
-    this.addStats();
+    if (this.room.players.length !== 2) {
+      this.room.players[1] = {
+        finish: false,
+        name: 'undefind',
+        id: 'undefind',
+      };
+    }
     this.verifLevels();
     this.router.navigate(['mainmenu']);
   }
