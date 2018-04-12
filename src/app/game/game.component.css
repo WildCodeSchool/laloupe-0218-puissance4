@@ -63,7 +63,7 @@
 }
 
 .token-board {
-  transform: translateY(-50px);
+  transform: translateY(-35px);
 }
 
 .tokenSelect {
@@ -75,8 +75,7 @@
 }
 
 .tokenText {
-  margin-top: -125px;
-  margin-bottom: 0;
+  margin-top: -100px;
   text-decoration: none;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
