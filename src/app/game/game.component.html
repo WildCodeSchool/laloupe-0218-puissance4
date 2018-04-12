@@ -17,7 +17,7 @@
     <div class="row justify-content-center">
       <!-- Player Cards -->
       <div class="col-3">
-        <div *ngIf="userAdvers" class="player2">
+        <div *ngIf="userAdvers && room.players[numAdvers].here === true" class="player2">
           <div class="card text-center border-danger" style="width: 15rem;">
             <img class="card-img-top img-player" src="{{userAdvers.img}}" alt="advImg">
             <div class="card-body text-danger">
@@ -31,7 +31,7 @@
           <img class="img-player" src='{{userAdvers.img}}' />
         </div> -->
         <div class="winBtn" *ngIf="this.room.winner != -1">
-          <p (click)="menu()">Back to Menu</p>
+          <p (click)="menuEnd()">Back to Menu</p>
         </div>
         <div class="surrender" *ngIf="this.room.winner === -1">
           <p (click)="menu()">Surrender ?</p>
@@ -91,7 +91,7 @@
           </div>
         </div>
         <div class="row justify-content-center token-board" *ngIf="showToken === true">
-          <div *ngIf="user ">
+          <div *ngIf="user && user.levels >= 4 ">
             <img class="tokenSelect " src="{{user.img}} " (click)="changeToken(user.img) " />
           </div>
           <div>
@@ -102,51 +102,51 @@
             <img class="tokenSelect " alt="yellow-frog " src="./assets/img/yellow-frog.png " (click)="changeToken(
       './assets/img/yellow-frog.png') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 2">
             <img class="tokenSelect " alt="deer" src="./assets/img/deer.png " (click)="changeToken(
         './assets/img/deer.png') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 5" >
             <img class="tokenSelect " alt="download" src="./assets/img/download.png " (click)="changeToken(
           './assets/img/download.png') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 6">
             <img class="tokenSelect " alt="martin " src="./assets/img/martin.jpg " (click)="changeToken(
       './assets/img/martin.jpg') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 10">
             <img class="tokenSelect " alt="victor " src="./assets/img/victor.jpeg " (click)="changeToken(
       './assets/img/victor.jpeg') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 10">
             <img class="tokenSelect " alt="nyancat " src="./assets/img/nyanCat.jpeg " (click)="changeToken(
       './assets/img/nyanCat.jpeg') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 11">
             <img class="tokenSelect " alt="gde " src="./assets/img/gde.gif " (click)="changeToken(
         './assets/img/gde.gif') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 13">
             <img class="tokenSelect " alt="moon " src="./assets/img/moon-phases-gif-1.gif" (click)="changeToken(
         './assets/img/moon-phases-gif-1.gif') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 15">
             <img class="tokenSelect " alt="music " src="./assets/img/music.gif" (click)="changeToken(
           './assets/img/music.gif') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 16">
             <img class="tokenSelect " alt="source " src="./assets/img/source.gif" (click)="changeToken(
           './assets/img/source.gif') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 17">
             <img class="tokenSelect " alt="vortex " src="./assets/img/vortex.gif" (click)="changeToken(
           './assets/img/vortex.gif') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 18">
             <img class="tokenSelect " alt="epileptique " src="./assets/img/epileptique.gif" (click)="changeToken(
             './assets/img/epileptique.gif') " />
           </div>
-          <div>
+          <div *ngIf="user.levels >= 20">
             <img class="tokenSelect " alt="goldfish " src="./assets/img/goldfishdrib.gif" (click)="changeToken(
               './assets/img/goldfishdrib.gif') " />
           </div>
