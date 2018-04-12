@@ -17,7 +17,7 @@
     <div class="row justify-content-center">
       <!-- Player Cards -->
       <div class="col-3">
-        <div *ngIf="userAdvers" class="player2">
+        <div *ngIf="userAdvers && room.players[numAdvers].here === true" class="player2">
           <div class="card text-center border-danger" style="width: 15rem;">
             <img class="card-img-top img-player" src="{{userAdvers.img}}" alt="advImg">
             <div class="card-body text-danger">
@@ -31,7 +31,7 @@
           <img class="img-player" src='{{userAdvers.img}}' />
         </div> -->
         <div class="winBtn" *ngIf="this.room.winner != -1">
-          <p (click)="menu()">Back to Menu</p>
+          <p (click)="menuEnd()">Back to Menu</p>
         </div>
         <div class="surrender" *ngIf="this.room.winner === -1">
           <p (click)="menu()">Surrender ?</p>

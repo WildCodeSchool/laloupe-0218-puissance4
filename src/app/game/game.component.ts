@@ -105,6 +105,7 @@ export class GameComponent implements OnInit, OnDestroy {
         finish: false,
         name: 'undefind',
         id: 'undefind',
+        here: false,
       };
 
 
@@ -321,15 +322,33 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   menu() {
+    this.verifLevels();
+    this.router.navigate(['mainmenu']);
     if (this.room.players.length !== 2) {
       this.room.players[1] = {
         finish: false,
         name: 'undefind',
         id: 'undefind',
+        here: false,
+      };
+    }
+    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+  }
+
+  menuEnd() {
+
+    if (this.room.players.length !== 2) {
+      this.room.players[1] = {
+        finish: false,
+        name: 'undefind',
+        id: 'undefind',
+        here: false,
       };
     }
     this.verifLevels();
+    this.addStats();
     this.router.navigate(['mainmenu']);
+
   }
 
   chat() {
@@ -338,8 +357,8 @@ export class GameComponent implements OnInit, OnDestroy {
     }
     console.log(this.message);
 
-    this.room.chat[this.room.chat.length] = this.room.players[this.numPlayer].name + 
-    ' : ' + this.message;
+    this.room.chat[this.room.chat.length] = this.room.players[this.numPlayer].name +
+      ' : ' + this.message;
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
     this.message = '';
   }

@@ -62,6 +62,7 @@ export class MatchmakingComponent implements OnInit {
         if (room.players.length === 1) {
           room.players.push(player);
           room.players[1].id = this.user.uid;
+          room.players[1].here = true;
           this.db.doc('rooms/' + roomId).update(JSON.parse(JSON.stringify(room)));
           this.router.navigate(['game', roomId, player.name]);
           return;
@@ -78,6 +79,7 @@ export class MatchmakingComponent implements OnInit {
       room.token = ['./assets/img/red-frog.png', './assets/img/yellow-frog.png'];
       room.players[0].id = this.user.uid;
       room.chat = ['Good luck !'];
+      room.players[0].here = true;
 
       this.db.collection('rooms')
         .add(JSON.parse(JSON.stringify(room)))
