@@ -38,6 +38,7 @@ export class GameComponent implements OnInit {
   userAdvers;
   numPlayer;
   numAdvers;
+  showToken = false;
 
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('id');
@@ -293,12 +294,12 @@ export class GameComponent implements OnInit {
   }
 
   chat(text) {
-  
+
     console.log(text);
-    
+
     this.room.chat[this.room.chat.length] = this.room.players[this.numPlayer].name + ' : ' + text;
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
-    
+
   }
 
   changeToken(img) {
@@ -310,7 +311,11 @@ export class GameComponent implements OnInit {
     }
   }
 
-
+  showTokens() {
+    if (this.showToken === false) {
+      this.showToken = true;
+    } else { this.showToken = false; }
+  }
 
 
 

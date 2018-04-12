@@ -1,36 +1,297 @@
-.cell{
-    width: 50px;
-    height: 50px;
-    border: solid 5px;
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    border-radius: 2cm;
-    float: left;
-    
+@import url('https://fonts.googleapis.com/css?family=Iceland');
+.cell {
+  width: 75px;
+  height: 75px;
+  border: solid 5px;
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  border-radius: 2cm;
+  float: left;
 }
 
-.line{
-    display: block;
-    clear: both;
+.line {
+  display: block;
+  clear: both;
 }
 
-.red{
-    width: 40px;
-    height: 40px;
-    border-radius: 2cm;
-    background-color: red;
+.token {
+  width: 65px;
+  height: 65px;
+  border-radius: 2cm;
 }
-.yellow{
-    width: 40px;
-    height: 40px;
-    border-radius: 2cm;
-    background-color: yellow;
+
+.img-player {
+  width: 120px;
+  height: 120px;
+  border-radius: 5cm;
 }
-.img-player{
-    width: 120px;
-    height: 120px;
-    border-radius: 5cm;
+
+.yourTurn {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 3em;
+}
+
+.myTurn {
+  font-family: 'Iceland', cursive;
+  color: #ffffff;
+  font-size: 3em;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+}
+
+.oppTurn {
+  font-family: 'Iceland', cursive;
+  color: #ffffff;
+  font-size: 3em;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF0000, 0 0 70px #FF0000, 0 0 80px #FF0000, 0 0 100px #FF0000, 0 0 150px #FF0000;
+}
+
+.boardGame {
+  margin-top: 45px;
+}
+
+.winTxt {
+  font-family: 'Iceland', cursive;
+  color: #ffffff;
+  font-size: 3em;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #32CD32, 0 0 70px #32CD32, 0 0 80px #32CD32, 0 0 100px #32CD32, 0 0 150px #32CD32;
+}
+
+.tokenSelect {
+  width: 40px;
+  height: 40px;
+  border-radius: 2cm;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.tokenText {
+  margin-top: -75px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+  font-family: 'Iceland', cursive;
+  font-size: 2em;
+  color: #32CD32;
+  cursor: pointer;
+}
+
+.tokenText:hover {
+  font-size: 2.5em;
+  -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon2 1.5s ease-in-out infinite alternate;
+  animation: neon2 1.5s ease-in-out infinite alternate;
+  color: #ffffff;
+}
+
+.chatBox {
+  margin-top: 35px;
+  margin-bottom: 15px;
+  height: 450px;
+  max-height: 450px;
+  width: 300px;
+  overflow-y: scroll;
+  word-wrap: break-word;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+}
+
+.chatLog {
+  color: white;
+}
+
+.chatBtn {
+  font-size: 1.5em;
+  margin-top: 10px;
+  width: 300px;
+  text-decoration: none;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+  font-family: 'Iceland', cursive;
+  color: white;
+  cursor: pointer;
+}
+
+.chatBtn:hover {
+  font-size: 1.8em;
+  -webkit-animation: neon3 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon3 1.5s ease-in-out infinite alternate;
+  animation: neon3 1.5s ease-in-out infinite alternate;
+  color: #ffffff;
+}
+
+.chatInput {
+  width: 300px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-color: white;
+  color: white;
+}
+
+.winBtn {
+  text-decoration: none;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+  font-family: 'Iceland', cursive;
+  position: absolute;
+  font-size: 1.5em;
+  bottom: 45%;
+  color: white;
+  cursor: pointer;
+}
+
+.winBtn:hover {
+  font-size: 1.8em;
+  -webkit-animation: neon3 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon3 1.5s ease-in-out infinite alternate;
+  animation: neon3 1.5s ease-in-out infinite alternate;
+  color: #ffffff;
+}
+
+.surrender {
+  text-decoration: none;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+  font-family: 'Iceland', cursive;
+  position: absolute;
+  bottom: 45%;
+  font-size: 1.5em;
+  color: red;
+  cursor: pointer;
+}
+
+.surrender:hover {
+  font-size: 1.8em;
+  -webkit-animation: neon4 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon4 1.5s ease-in-out infinite alternate;
+  animation: neon4 1.5s ease-in-out infinite alternate;
+  color: #ffffff;
+}
+
+.card {
+  background-color: rgb(32, 32, 32);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 1)), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(to bottom, rgb(8, 8, 8), rgb(32, 32, 32));
+  background-size: 100% 100%, 10px 10px, 10px 10px, 10px 5px;
+  background-position: 0px 0px, 0px 0px, 5px 5px, 0px 0px;
+}
+
+.img-player {
+  margin-left: 55px;
+  margin-top: 10px;
+}
+
+.player1 {
+  margin-top: 150px;
+  margin-left: -35px;
+}
+
+.player2 {
+  margin-left: -35px;
+  margin-top: 15px;
+}
+
+/*glow for webkit*/
+
+@-webkit-keyframes neon2 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #32CD32, 0 0 70px #32CD32, 0 0 80px #32CD32, 0 0 100px #32CD32, 0 0 150px #32CD32;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #32CD32, 0 0 35px #32CD32, 0 0 40px #32CD32, 0 0 50px #32CD32, 0 0 75px #32CD32;
+  }
+}
+
+/*glow for mozilla*/
+
+@-moz-keyframes neon2 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #32CD32, 0 0 70px #32CD32, 0 0 80px #32CD32, 0 0 100px #32CD32, 0 0 150px #32CD32;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #32CD32, 0 0 35px #32CD32, 0 0 40px #32CD32, 0 0 50px #32CD32, 0 0 75px #32CD32;
+  }
+}
+
+/*glow*/
+
+@keyframes neon2 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #32CD32, 0 0 70px #32CD32, 0 0 80px #32CD32, 0 0 100px #32CD32, 0 0 150px #32CD32;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #32CD32, 0 0 35px #32CD32, 0 0 40px #32CD32, 0 0 50px #32CD32, 0 0 75px #32CD32;
+  }
+}
+
+/*glow for webkit*/
+
+@-webkit-keyframes neon3 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 70px #fff, 0 0 80px #fff, 0 0 100px #fff, 0 0 150px #fff;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 35px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 75px #fff;
+  }
+}
+
+/*glow for mozilla*/
+
+@-moz-keyframes neon3 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 70px #fff, 0 0 80px #fff, 0 0 100px #fff, 0 0 150px #fff;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 35px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 75px #fff;
+  }
+}
+
+/*glow*/
+
+@keyframes neon3 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 70px #fff, 0 0 80px #fff, 0 0 100px #fff, 0 0 150px #fff;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 35px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 75px #fff;
+  }
+}
+
+/*glow for webkit*/
+
+@-webkit-keyframes neon4 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF0000, 0 0 70px #FF0000, 0 0 80px #FF0000, 0 0 100px #FF0000, 0 0 150px #FF0000;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF0000, 0 0 35px #FF0000, 0 0 40px #FF0000, 0 0 50px #FF0000, 0 0 75px #FF0000;
+  }
+}
+
+/*glow for mozilla*/
+
+@-moz-keyframes neon4 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF0000, 0 0 70px #FF0000, 0 0 80px #FF0000, 0 0 100px #FF0000, 0 0 150px #FF0000;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF0000, 0 0 35px #FF0000, 0 0 40px #FF0000, 0 0 50px #FF0000, 0 0 75px #FF0000;
+  }
+}
+
+/*glow*/
+
+@keyframes neon4 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF0000, 0 0 70px #FF0000, 0 0 80px #FF0000, 0 0 100px #FF0000, 0 0 150px #FF0000;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF0000, 0 0 35px #FF0000, 0 0 40px #FF0000, 0 0 50px #FF0000, 0 0 75px #FF0000;
+  }
 }
