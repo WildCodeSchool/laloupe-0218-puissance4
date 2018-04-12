@@ -4,29 +4,28 @@
 </div>
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <button type="button" class="btn" (click)="createGame()">Play</button>
+    <div class="col text-center">
+      <!-- <button type="button" class="btn menuBtn" (click)="createGame()">Play</button> -->
+      <p class="menuBtn" (click)="createGame()">Play</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <button type="button" class="btn" data-toggle="modal" data-target="#modalRules">
-        Rules
-      </button>
+    <div class="col text-center">
+      <p class="menuBtn" data-toggle="modal" data-target="#modalRules">Rules</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <button type="button" class="btn" (click)="profile()">Profile</button>
+    <div class="col text-center">
+      <p class="menuBtn" (click)="profile()">Profile</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <button type="button" class="btn" (click)="signOut()">Logout</button>
+    <div class="col text-center">
+      <p class="menuBtn" (click)="signOut()">Logout</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
+    <div class="col text-center">
       <button type="button" class="btnVictor" data-toggle="modal" data-target="#modalVictor">
         ?
       </button>
