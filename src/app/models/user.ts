@@ -5,4 +5,6 @@ export class User {
   nbrGame: number;
   nbrWins: number;
   nbrLoose: number;
+  nbrEqual: number;
+  levels: number;
 }

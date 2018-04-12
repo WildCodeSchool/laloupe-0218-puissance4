@@ -1,63 +1,142 @@
 <div *ngIf="room">
-<div *ngIf="this.room.turn === numPlayer">
-A toi de jouer !
-</div>
-<div class="boardGame" *ngIf="room">
-  <div class="line " *ngFor="let line of room.grid">
-    <div class="cell" *ngFor="let cell of line.line; let i = index" (click)='play(i)'>
-      <div class="img-pion" *ngIf="cell != 'vide'">
-        <div class="red" *ngIf="cell == 'red'">
-          <div *ngIf="afAuth.authState | async as user" class="signOut">
-            <img src="{{ room.token[0] }}" width="50" height="50" class="red" />
+  <div class="container">
+    <div class="row justify-content-center yourTurn">
+      <div class="myTurn" *ngIf="this.room.turn === numPlayer && this.room.winner === -1">
+        It's your turn !
+      </div>
+      <div class="oppTurn" *ngIf="this.room.turn === numAdvers && this.room.winner === -1">
+        It's your opponent turn !
+      </div>
+      <div class="winTxt" *ngIf="this.room.winner != -1">
+        Le joueur {{this.room.players[this.room.winner].name}} à gagné !
+      </div>
+      <div class="oppTurn" *ngIf="this.room.end === true && this.room.winner === -1">
+      Stalemate !
+  </div>
+    </div>
+    <div class="row justify-content-center">
+      <!-- Player Cards -->
+      <div class="col-3">
+        <div *ngIf="userAdvers" class="player2">
+          <div class="card text-center border-danger" style="width: 15rem;">
+            <img class="card-img-top img-player" src="{{userAdvers.img}}" alt="advImg">
+            <div class="card-body text-danger">
+              <h5 class="card-title">{{userAdvers.name}}</h5>
+              <p class="card-text">User Level</p>
+            </div>
           </div>
         </div>
-        <div class="yellow" *ngIf="cell == 'yellow'">
-          <div class="yellow" *ngIf="cell == 'yellow'">
-            <img src="{{room.token[1]}}" width="50" height="50" class="yellow" />
+        <!-- <div *ngIf="userAdvers" class="player2">
+          {{userAdvers.name}}
+          <img class="img-player" src='{{userAdvers.img}}' />
+        </div> -->
+        <div class="winBtn" *ngIf="this.room.winner != -1">
+          <p (click)="menu()">Back to Menu</p>
+        </div>
+        <div class="surrender" *ngIf="this.room.winner === -1">
+          <p (click)="menu()">Surrender ?</p>
+        </div>
+        <!-- <div class="player1" *ngIf="user">
+          {{user.name}}
+          <img class="img-player" src="{{user.img}}" />
+        </div> -->
+        <div *ngIf="user" class="player1">
+          <div class="card text-center border-success" style="width: 15rem;">
+            <img class="card-img-top img-player" src="{{user.img}}" alt="usrImg">
+            <div class="card-body text-success">
+              <h5 class="card-title">{{user.name}}</h5>
+              <p class="card-text">User Level</p>
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- Game Board -->
+      <div class="boardGame text-center col-6" *ngIf="room">
+        <div class="line " *ngFor="let line of room.grid">
+          <div class="cell" *ngFor="let cell of line.line; let i = index" (click)='play(i)'>
+            <div class="img-pion" *ngIf="cell != 'vide'">
+              <div class="token" *ngIf="cell == 'red'">
+                <div *ngIf="afAuth.authState | async as user" class="signOut">
+                  <img src="{{ room.token[0] }}" width="50" height="50" class="token" />
+                </div>
+              </div>
+              <div class="token" *ngIf="cell == 'yellow'">
+                <div class="token" *ngIf="cell == 'yellow'">
+                  <img src="{{room.token[1]}}" width="50" height="50" class="token" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ChatBox -->
+      <div class="col-3 text-center">
+        <div class="chatBox">
+          <div *ngFor="let text of room.chat">
+            <p class="chatLog">{{text}}</p>
+          </div>
+        </div>
+        <input class="chatInput" #box (keyup.enter)="chat(box.value)">
+        <p class="chatBtn" (click)="chat(box.value)">Send Message</p>
+      </div>
     </div>
-  </div>
-  <div class="win" *ngIf="this.room.winner != -1">
-    Le joueur {{this.room.players[this.room.winner].name}} à gagné !
-    <button (click)="menu()">Menu</button>
-  </div>
-  <div>
-    <div *ngIf="user">
-      <img class="red" src="{{user.img}}" (click)="changeToken(user.img)" />
-    </div>
-    <div>
-      <img class="red" src="./assets/img/red-frog.png" (click)="changeToken('./assets/img/red-frog.png')" />
-    </div>
-    <div>
-      <img class="yellow" src="./assets/img/yellow-frog.png" (click)="changeToken('./assets/img/yellow-frog.png')" />
-    </div>
-    <div>
-      <img class="red" src="./assets/img/martin.jpg" (click)="changeToken('./assets/img/martin.jpg')" />
-    </div>
-    <div>
-      <img class="yellow" src="./assets/img/victor.jpeg" (click)="changeToken('./assets/img/victor.jpeg')" />
-    </div>
-    <div>
-      <img class="yellow" src="./assets/img/nyanCat.jpeg" (click)="changeToken('./assets/img/nyanCat.jpeg')" />
-    </div>
-    <div *ngFor="let text of room.chat">
-      {{text}}
-    </div>
-    <button (click)="chat(box.value)"> Send Message</button>
-    <input #box (keyup.enter)="chat(box.value)">
-  </div>
-</div>
 
-<div class="player1" *ngIf="user" >
-  {{user.name}}
-    <img  class="img-player" src="{{user.img}}" />
-</div>
+    <!-- Token Selector -->
+    <div class="row justify-content-center">
+      <div class="token-change">
+        <div class="row justify-content-center">
+          <div class="col text-center">
+            <p class="tokenText" (click)="showTokens()">Choose your weapon !</p>
+          </div>
+        </div>
+        <div class="row justify-content-center" *ngIf="showToken === true">
+          <div *ngIf="user ">
+            <img class="tokenSelect " src="{{user.img}} " (click)="changeToken(user.img) " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="red-frog " src="./assets/img/red-frog.png " (click)="changeToken(
+      './assets/img/red-frog.png') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="yellow-frog " src="./assets/img/yellow-frog.png " (click)="changeToken(
+      './assets/img/yellow-frog.png') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="martin " src="./assets/img/martin.jpg " (click)="changeToken(
+      './assets/img/martin.jpg') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="victor " src="./assets/img/victor.jpeg " (click)="changeToken(
+      './assets/img/victor.jpeg') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="nyancat " src="./assets/img/nyanCat.jpeg " (click)="changeToken(
+      './assets/img/nyanCat.jpeg') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="gde " src="./assets/img/gde.gif " (click)="changeToken(
+        './assets/img/gde.gif') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="moon " src="./assets/img/moon-phases-gif-1.gif" (click)="changeToken(
+        './assets/img/moon-phases-gif-1.gif') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="music " src="./assets/img/music.gif" (click)="changeToken(
+          './assets/img/music.gif') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="source " src="./assets/img/source.gif" (click)="changeToken(
+          './assets/img/source.gif') " />
+          </div>
+          <div>
+            <img class="tokenSelect " alt="vortex " src="./assets/img/vortex.gif" (click)="changeToken(
+          './assets/img/vortex.gif') " />
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div *ngIf="userAdvers" class="player2">
-  {{userAdvers.name}}
-    <img class="img-player" src='{{userAdvers.img}}' />
-</div>
+  </div>
 </div>
