@@ -22,7 +22,7 @@
             <img class="card-img-top img-player" src="{{userAdvers.img}}" alt="advImg">
             <div class="card-body text-danger">
               <h5 class="card-title">{{userAdvers.name}}</h5>
-              <p class="card-text">User Level</p>
+              <p class="card-text">{{userAdvers.levels}}</p>
             </div>
           </div>
         </div>
@@ -40,12 +40,12 @@
           {{user.name}}
           <img class="img-player" src="{{user.img}}" />
         </div> -->
-        <div *ngIf="user" class="player1">
+        <div *ngIf="user && room.players.length === 2" class="player1">
           <div class="card text-center border-success" style="width: 15rem;">
             <img class="card-img-top img-player" src="{{user.img}}" alt="usrImg">
             <div class="card-body text-success">
               <h5 class="card-title">{{user.name}}</h5>
-              <p class="card-text">User Level</p>
+              <p class="card-text">Level : {{user.levels}}</p>
             </div>
           </div>
         </div>
@@ -72,13 +72,13 @@
       </div>
       <!-- ChatBox -->
       <div class="col-3 text-center">
-        <div class="chatBox">
+        <div class="chatBox" id="chat">
           <div *ngFor="let text of room.chat">
             <p class="chatLog">{{text}}</p>
           </div>
         </div>
-        <input class="chatInput" #box (keyup.enter)="chat(box.value)">
-        <p class="chatBtn" (click)="chat(box.value)">Send Message</p>
+        <input class="chatInput" [(ngModel)]="message" (keyup.enter)="chat()">
+        <p class="chatBtn" (click)="chat()">Send Message</p>
       </div>
     </div>
 

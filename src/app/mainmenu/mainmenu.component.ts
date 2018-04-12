@@ -53,6 +53,7 @@ export class MainmenuComponent implements OnInit {
 
   createGame() {
     if (this.ok === true) {
+      console.log('WUT');
       this.takeData();
       this.router.navigate(['matchmaking']);
     }

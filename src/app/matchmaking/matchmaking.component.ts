@@ -39,6 +39,7 @@ export class MatchmakingComponent implements OnInit {
       this.db
         .doc('users/' + this.idUser)
         .valueChanges()
+        .take(1)
         .subscribe((user) => {
           this.user = user;
           this.getRooms();
