@@ -61,6 +61,13 @@ export class GameComponent implements OnInit, OnDestroy {
         .doc<Room>('rooms/' + this.roomId)
         .valueChanges()
         .subscribe((room) => {
+          console.log(room);
+          if (!room) {
+            console.log('toto');
+
+            this.router.navigate(['mainmenu']);
+            return;
+          }
           this.room = room;
           this.updateScroll();
           if (this.room.players[0].name === this.authService.name.replace(/\s/g, '')) {
@@ -99,6 +106,9 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (!this.room) {
+      return;
+    }
     console.log('ngdestroy');
     if (this.room.players.length !== 2) {
       this.room.players[1] = {
@@ -119,7 +129,11 @@ export class GameComponent implements OnInit, OnDestroy {
     }
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
     this.db.doc('users/' + this.authService.user.uid).set(this.user);
+    
+    this.router.navigate(['mainmenu']);
+    this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
 
+    });
   }
 
   changeTurn() {
@@ -322,8 +336,11 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   menu() {
+    this.room.players[this.numPlayer].here = false;
     this.verifLevels();
-    this.router.navigate(['mainmenu']);
+    this.user.nbrGame = this.user.nbrGame + 1;
+    this.user.nbrLoose = this.user.nbrLoose + 1;
+    this.db.doc('users/' + this.authService.user.uid).update(this.user);
     if (this.room.players.length !== 2) {
       this.room.players[1] = {
         finish: false,
@@ -332,22 +349,24 @@ export class GameComponent implements OnInit, OnDestroy {
         here: false,
       };
     }
-    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+    this.router.navigate(['mainmenu']);
+    this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
+
+    });
   }
 
   menuEnd() {
-
-    if (this.room.players.length !== 2) {
-      this.room.players[1] = {
-        finish: false,
-        name: 'undefind',
-        id: 'undefind',
-        here: false,
-      };
-    }
+    this.room.players[this.numPlayer].here = false;
+    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
     this.verifLevels();
     this.addStats();
     this.router.navigate(['mainmenu']);
+    this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
+
+    });
+
+
+
 
   }
 
@@ -397,47 +416,47 @@ export class GameComponent implements OnInit, OnDestroy {
       this.user.levels = 1;
     } else if (1 <= this.user.nbrWins && this.user.nbrWins < 3) {
       this.user.levels = 2;
-    }else if (3 <= this.user.nbrWins && this.user.nbrWins < 6) {
+    } else if (3 <= this.user.nbrWins && this.user.nbrWins < 6) {
       this.user.levels = 3;
-    }else if (6 <= this.user.nbrWins && this.user.nbrWins < 10) {
+    } else if (6 <= this.user.nbrWins && this.user.nbrWins < 10) {
       this.user.levels = 4;
-    }else if (10 <= this.user.nbrWins && this.user.nbrWins < 15) {
+    } else if (10 <= this.user.nbrWins && this.user.nbrWins < 15) {
       this.user.levels = 5;
-    }else if (15 <= this.user.nbrWins && this.user.nbrWins < 20) {
+    } else if (15 <= this.user.nbrWins && this.user.nbrWins < 20) {
       this.user.levels = 6;
-    }else if (20 <= this.user.nbrWins && this.user.nbrWins < 27) {
+    } else if (20 <= this.user.nbrWins && this.user.nbrWins < 27) {
       this.user.levels = 7;
-    }else if (27 <= this.user.nbrWins && this.user.nbrWins < 35) {
+    } else if (27 <= this.user.nbrWins && this.user.nbrWins < 35) {
       this.user.levels = 8;
-    }else if (35 <= this.user.nbrWins && this.user.nbrWins < 45) {
+    } else if (35 <= this.user.nbrWins && this.user.nbrWins < 45) {
       this.user.levels = 9;
-    }else if (45 <= this.user.nbrWins && this.user.nbrWins < 55) {
+    } else if (45 <= this.user.nbrWins && this.user.nbrWins < 55) {
       this.user.levels = 10;
-    }else if (55 <= this.user.nbrWins && this.user.nbrWins < 65) {
+    } else if (55 <= this.user.nbrWins && this.user.nbrWins < 65) {
       this.user.levels = 11;
-    }else if (65 <= this.user.nbrWins && this.user.nbrWins < 80) {
+    } else if (65 <= this.user.nbrWins && this.user.nbrWins < 80) {
       this.user.levels = 12;
-    }else if (80 <= this.user.nbrWins && this.user.nbrWins < 100) {
+    } else if (80 <= this.user.nbrWins && this.user.nbrWins < 100) {
       this.user.levels = 13;
-    }else if (100 <= this.user.nbrWins && this.user.nbrWins < 120) {
+    } else if (100 <= this.user.nbrWins && this.user.nbrWins < 120) {
       this.user.levels = 14;
-    }else if (120 <= this.user.nbrWins && this.user.nbrWins < 150) {
+    } else if (120 <= this.user.nbrWins && this.user.nbrWins < 150) {
       this.user.levels = 15;
-    }else if (150 <= this.user.nbrWins && this.user.nbrWins < 180) {
+    } else if (150 <= this.user.nbrWins && this.user.nbrWins < 180) {
       this.user.levels = 16;
-    }else if (180 <= this.user.nbrWins && this.user.nbrWins < 210) {
+    } else if (180 <= this.user.nbrWins && this.user.nbrWins < 210) {
       this.user.levels = 17;
-    }else if (210 <= this.user.nbrWins && this.user.nbrWins < 250) {
+    } else if (210 <= this.user.nbrWins && this.user.nbrWins < 250) {
       this.user.levels = 18;
-    }else if (250 <= this.user.nbrWins && this.user.nbrWins < 500) {
+    } else if (250 <= this.user.nbrWins && this.user.nbrWins < 500) {
       this.user.levels = 19;
-    }else if (500 < this.user.nbrWins) {
+    } else if (500 < this.user.nbrWins) {
       this.user.levels = 20;
     }
-   
-      
-    this.db.doc('users/' + this.authService.user.uid).set(this.user);     
-   
+
+
+    this.db.doc('users/' + this.authService.user.uid).set(this.user);
+
   }
 
 }
