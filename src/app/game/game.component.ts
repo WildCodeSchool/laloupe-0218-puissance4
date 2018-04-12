@@ -393,72 +393,51 @@ export class GameComponent implements OnInit, OnDestroy {
 
   verifLevels() {
 
-
-    switch (this.user.nbrWins) {
-      case this.user.nbrWins < 1:
-        this.user.levels = 1;
-        break;
-      case 1 < this.user.nbrWins && this.user.nbrWins < 3:
-        this.user.levels = 2;
-        break;
-      case 3 < this.user.nbrWins && this.user.nbrWins < 6:
-        this.user.levels = 3;
-        break;
-      case 6 < this.user.nbrWins && this.user.nbrWins < 10:
-        this.user.levels = 4;
-        break;
-      case 10 < this.user.nbrWins && this.user.nbrWins < 15:
-        this.user.levels = 5;
-        break;
-      case 15 < this.user.nbrWins && this.user.nbrWins < 20:
-        this.user.levels = 6;
-        break;
-      case 20 < this.user.nbrWins && this.user.nbrWins < 27:
-        this.user.levels = 7;
-        break;
-      case 27 < this.user.nbrWins && this.user.nbrWins < 35:
-        this.user.levels = 8;
-        break;
-      case 35 < this.user.nbrWins && this.user.nbrWins < 45:
-        this.user.levels = 9;
-        break;
-      case 45 < this.user.nbrWins && this.user.nbrWins < 55:
-        this.user.levels = 10;
-        break;
-      case 55 < this.user.nbrWins && this.user.nbrWins < 65:
-        this.user.levels = 11;
-        break;
-      case 65 < this.user.nbrWins && this.user.nbrWins < 80:
-        this.user.levels = 12;
-        break;
-      case 80 < this.user.nbrWins && this.user.nbrWins < 100:
-        this.user.levels = 13;
-        break;
-      case 100 < this.user.nbrWins && this.user.nbrWins < 120:
-        this.user.levels = 14;
-        break;
-      case 120 < this.user.nbrWins && this.user.nbrWins < 150:
-        this.user.levels = 15;
-        break;
-      case 150 < this.user.nbrWins && this.user.nbrWins < 180:
-        this.user.levels = 16;
-        break;
-      case 180 < this.user.nbrWins && this.user.nbrWins < 210:
-        this.user.levels = 17;
-        break;
-      case 210 < this.user.nbrWins && this.user.nbrWins < 250:
-        this.user.levels = 18;
-        break;
-      case 250 < this.user.nbrWins && this.user.nbrWins < 500:
-        this.user.levels = 19;
-        break;
-      case 500 < this.user.nbrWins:
-        this.user.levels = 20;
-        break;
-      default:
-        this.user.levels = this.user.levels;
-        this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+    if (this.user.nbrWins < 1) {
+      this.user.levels = 1;
+    } else if (1 <= this.user.nbrWins && this.user.nbrWins < 3) {
+      this.user.levels = 2;
+    }else if (3 <= this.user.nbrWins && this.user.nbrWins < 6) {
+      this.user.levels = 3;
+    }else if (6 <= this.user.nbrWins && this.user.nbrWins < 10) {
+      this.user.levels = 4;
+    }else if (10 <= this.user.nbrWins && this.user.nbrWins < 15) {
+      this.user.levels = 5;
+    }else if (15 <= this.user.nbrWins && this.user.nbrWins < 20) {
+      this.user.levels = 6;
+    }else if (20 <= this.user.nbrWins && this.user.nbrWins < 27) {
+      this.user.levels = 7;
+    }else if (27 <= this.user.nbrWins && this.user.nbrWins < 35) {
+      this.user.levels = 8;
+    }else if (35 <= this.user.nbrWins && this.user.nbrWins < 45) {
+      this.user.levels = 9;
+    }else if (45 <= this.user.nbrWins && this.user.nbrWins < 55) {
+      this.user.levels = 10;
+    }else if (55 <= this.user.nbrWins && this.user.nbrWins < 65) {
+      this.user.levels = 11;
+    }else if (65 <= this.user.nbrWins && this.user.nbrWins < 80) {
+      this.user.levels = 12;
+    }else if (80 <= this.user.nbrWins && this.user.nbrWins < 100) {
+      this.user.levels = 13;
+    }else if (100 <= this.user.nbrWins && this.user.nbrWins < 120) {
+      this.user.levels = 14;
+    }else if (120 <= this.user.nbrWins && this.user.nbrWins < 150) {
+      this.user.levels = 15;
+    }else if (150 <= this.user.nbrWins && this.user.nbrWins < 180) {
+      this.user.levels = 16;
+    }else if (180 <= this.user.nbrWins && this.user.nbrWins < 210) {
+      this.user.levels = 17;
+    }else if (210 <= this.user.nbrWins && this.user.nbrWins < 250) {
+      this.user.levels = 18;
+    }else if (250 <= this.user.nbrWins && this.user.nbrWins < 500) {
+      this.user.levels = 19;
+    }else if (500 < this.user.nbrWins) {
+      this.user.levels = 20;
     }
+   
+      
+    this.db.doc('users/' + this.authService.user.uid).set(this.user);     
+   
   }
 
 }

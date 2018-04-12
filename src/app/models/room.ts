@@ -8,5 +8,6 @@ export class Room {
   end: boolean;
   token = [];
   chat = [];
+  nbPLayers: number;
 
 }

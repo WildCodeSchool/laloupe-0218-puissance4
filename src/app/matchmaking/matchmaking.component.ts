@@ -49,7 +49,8 @@ export class MatchmakingComponent implements OnInit {
   }
 
   getRooms() {
-    const roomCollection = this.db.collection<Room>('rooms');
+    const roomCollection = this.db
+    .collection<Room>('rooms', ref => ref.where('nbPLayers', '==', 1));
 
     const snapshot = roomCollection.snapshotChanges().take(1).subscribe((snapshot) => {
       const player = new Player();
@@ -63,6 +64,8 @@ export class MatchmakingComponent implements OnInit {
           room.players.push(player);
           room.players[1].id = this.user.uid;
           room.players[1].here = true;
+          room.nbPLayers = 2;
+
           this.db.doc('rooms/' + roomId).update(JSON.parse(JSON.stringify(room)));
           this.router.navigate(['game', roomId, player.name]);
           return;
@@ -80,6 +83,7 @@ export class MatchmakingComponent implements OnInit {
       room.players[0].id = this.user.uid;
       room.chat = ['Good luck !'];
       room.players[0].here = true;
+      room.nbPLayers = 1;
 
       this.db.collection('rooms')
         .add(JSON.parse(JSON.stringify(room)))
