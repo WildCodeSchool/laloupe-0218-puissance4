@@ -1,3 +1,4 @@
+<div *ngIf="room">
 <div *ngIf="this.room.turn === numPlayer">
 A toi de jouer !
 </div>
@@ -7,10 +8,14 @@ A toi de jouer !
       <div class="img-pion" *ngIf="cell != 'vide'">
         <div class="red" *ngIf="cell == 'red'">
           <div *ngIf="afAuth.authState | async as user" class="signOut">
-            <img src="{{ user.photoURL }}" width="50" height="50" class="red" />
+            <img src="{{ room.token[0] }}" width="50" height="50" class="red" />
           </div>
         </div>
-        <div class="yellow" *ngIf="cell == 'yellow'"></div>
+        <div class="yellow" *ngIf="cell == 'yellow'">
+          <div class="yellow" *ngIf="cell == 'yellow'">
+            <img src="{{room.token[1]}}" width="50" height="50" class="yellow" />
+          </div>
+        </div>
       </div>
 
     </div>
@@ -20,10 +25,39 @@ A toi de jouer !
     <button (click)="menu()">Menu</button>
   </div>
   <div>
+    <div *ngIf="user">
+      <img class="red" src="{{user.img}}" (click)="changeToken(user.img)" />
+    </div>
+    <div>
+      <img class="red" src="./assets/img/red-frog.png" (click)="changeToken('./assets/img/red-frog.png')" />
+    </div>
+    <div>
+      <img class="yellow" src="./assets/img/yellow-frog.png" (click)="changeToken('./assets/img/yellow-frog.png')" />
+    </div>
+    <div>
+      <img class="red" src="./assets/img/martin.jpg" (click)="changeToken('./assets/img/martin.jpg')" />
+    </div>
+    <div>
+      <img class="yellow" src="./assets/img/victor.jpeg" (click)="changeToken('./assets/img/victor.jpeg')" />
+    </div>
+    <div>
+      <img class="yellow" src="./assets/img/nyanCat.jpeg" (click)="changeToken('./assets/img/nyanCat.jpeg')" />
+    </div>
     <div *ngFor="let text of room.chat">
       {{text}}
     </div>
     <button (click)="chat(box.value)"> Send Message</button>
     <input #box (keyup.enter)="chat(box.value)">
   </div>
+</div>
+
+<div class="player1" *ngIf="user" >
+  {{user.name}}
+    <img  class="img-player" src="{{user.img}}" />
+</div>
+
+<div *ngIf="userAdvers" class="player2">
+  {{userAdvers.name}}
+    <img class="img-player" src='{{userAdvers.img}}' />
+</div>
 </div>

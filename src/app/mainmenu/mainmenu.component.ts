@@ -24,6 +24,7 @@ export class MainmenuComponent implements OnInit {
 
   idUser;
   user;
+  ok;
 
   ngOnInit() {
 
@@ -33,12 +34,13 @@ export class MainmenuComponent implements OnInit {
       }
       this.idUser = authState.uid;
       this.db
-        .doc('users/' + this.idUser)
+        .doc('users/' + authState.uid)
         .valueChanges()
         .subscribe((user) => {
           this.user = user;
+          this.ok = true;
         });
-      
+
     });
   }
 
@@ -50,12 +52,16 @@ export class MainmenuComponent implements OnInit {
   }
 
   createGame() {
-    
-    this.takeData();
-    this.router.navigate(['matchmaking']);
+    if (this.ok === true) {
+      this.takeData();
+      this.router.navigate(['matchmaking']);
+    }
   }
   profile() {
-    this.router.navigate(['profile']);
+    if (this.ok === true) {
+      this.takeData();
+      this.router.navigate(['profile']);
+    }
   }
 
   takeData() {

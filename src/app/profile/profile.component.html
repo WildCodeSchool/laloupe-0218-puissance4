@@ -3,10 +3,15 @@
     <div *ngIf="afAuth.authState | async as user" class="signOut">
       <img class="imgLog" src="{{ user.photoURL }}" />
       <h4 class="pseudo">{{ user.displayName }}&emsp;</h4>
-      <div class="winRate">
+      <div class="winRate" *ngIf="user">
         <p>Nbr of games : {{ this.nbrGame }}</p>
         <p>Wins : {{ this.nbrWins }}</p>
         <p>Loose : {{ this.nbrLoose }}</p>
+      </div>
+      <div class="winRate" *ngIf="!user">
+        <p>Nbr of games : 0</p>
+        <p>Wins : 0</p>
+        <p>Loose : 0</p>
       </div>
     </div>
   </div>
