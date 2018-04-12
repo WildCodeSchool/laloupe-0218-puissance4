@@ -10,6 +10,9 @@
       <div class="winTxt" *ngIf="this.room.winner != -1">
         Le joueur {{this.room.players[this.room.winner].name}} à gagné !
       </div>
+      <div class="oppTurn" *ngIf="this.room.end === true && this.room.winner === -1">
+      Stalemate !
+  </div>
     </div>
     <div class="row justify-content-center">
       <!-- Player Cards -->
@@ -47,6 +50,7 @@
           </div>
         </div>
       </div>
+
       <!-- Game Board -->
       <div class="boardGame text-center col-6" *ngIf="room">
         <div class="line " *ngFor="let line of room.grid">

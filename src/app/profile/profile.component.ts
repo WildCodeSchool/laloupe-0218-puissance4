@@ -21,7 +21,9 @@ export class ProfileComponent implements OnInit {
   nbrGame;
   nbrWins;
   nbrLoose;
+  nbrEqual;
   userId;
+  levels;
 
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {
@@ -38,6 +40,8 @@ export class ProfileComponent implements OnInit {
         this.nbrGame = '' + this.user.nbrGame;
         this.nbrWins = '' + this.user.nbrWins;
         this.nbrLoose = '' + this.user.nbrLoose;
+        this.nbrEqual = '' + this.user.nbrEqual;
+        this.levels = '' + this.user.levels;
       });
       
     });
