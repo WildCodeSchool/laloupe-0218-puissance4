@@ -38,6 +38,7 @@ export class GameComponent implements OnInit, OnDestroy {
   userAdvers;
   numPlayer;
   numAdvers;
+  showToken = false;
 
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('id');
@@ -330,16 +331,10 @@ export class GameComponent implements OnInit, OnDestroy {
     }
   }
 
-  backMenu() {
-    if (this.room.players.length !== 2) {
-      this.room.players[1] = {
-        finish: false,
-        name: 'undefind',
-        id: 'undefind',
-      };
-    }
-    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
-    this.router.navigate(['mainmenu']);
+  showTokens() {
+    if (!this.showToken) {
+      this.showToken = true;
+    } else { this.showToken = false; }
   }
 
   addStats() {
@@ -351,9 +346,6 @@ export class GameComponent implements OnInit, OnDestroy {
     } else {
       this.user.nbrLoose = this.user.nbrLoose + 1;
     }
-
-
-
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
     this.db.doc('users/' + this.authService.user.uid).update(this.user);
   }
