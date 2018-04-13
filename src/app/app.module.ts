@@ -14,6 +14,7 @@ import { GameComponent } from './game/game.component';
 import { MatchmakingComponent } from './matchmaking/matchmaking.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthService } from './auth.service';
+import { FormsModule } from '@angular/forms';
 
 
 const appRoutes: Routes = [
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
     ),
+    FormsModule,
   ],
   providers: [AngularFireAuth, AngularFirestore, AuthService],
   bootstrap: [AppComponent],

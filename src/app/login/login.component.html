@@ -3,9 +3,11 @@
 </div>
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-4 text-center" id="register">
-      <button id="signin" (click)="googleSignIn()">Google Sign-in</button>
-      <button id="signout" (click)="signOut()">LogOut</button>
+    <div class="col text-center" id="register">
+      <!-- <button id="signin" (click)="googleSignIn()">Google Sign-in</button> -->
+      <p class="menuBtn" (click)="googleSignIn()">Google Sign-In</p>
+      <!-- <button id="signout" (click)="signOut()">LogOut</button> -->
+      <p id="signout" class="menuBtn" (click)="signOut()">LogOut</p>
     </div>
   </div>
 </div>

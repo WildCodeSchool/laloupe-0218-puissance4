@@ -4,29 +4,27 @@
 </div>
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <button type="button" class="btn" (click)="createGame()">Play</button>
+    <div class="col text-center">
+      <p class="menuBtn" (click)="createGame()">Play</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <button type="button" class="btn" data-toggle="modal" data-target="#modalRules">
-        Rules
-      </button>
+    <div class="col text-center">
+      <p class="menuBtn" data-toggle="modal" data-target="#modalRules">Rules</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <button type="button" class="btn" (click)="profile()">Profile</button>
+    <div class="col text-center">
+      <p class="menuBtn" (click)="profile()">Profile</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <button type="button" class="btn" (click)="signOut()">Logout</button>
+    <div class="col text-center">
+      <p class="menuBtn" (click)="signOut()">Logout</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
+    <div class="col text-center">
       <button type="button" class="btnVictor" data-toggle="modal" data-target="#modalVictor">
         ?
       </button>
@@ -55,7 +53,7 @@
           <div class="container col-12">
             <div class="row">
               <div class="col-3">
-                <img class="modalImg" src="./../../assets/img/connect-4.jpg">
+                <img class="modalImg" src="./assets/img/connect-4.jpg" alt="connect-4">
               </div>
               <div class="col-9">
                 <p>Connect Four is a two-player connection game in which the players first choose a color and then take turns
@@ -76,7 +74,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <img class="victor" src="./assets/img/victor.jpeg">
+          <img class="victor" src="./assets/img/victor.jpeg" alt="victor-face">
         </div>
       </div>
     </div>

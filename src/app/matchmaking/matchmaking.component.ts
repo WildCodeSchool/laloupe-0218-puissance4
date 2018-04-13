@@ -23,30 +23,34 @@ export class MatchmakingComponent implements OnInit {
     private db: AngularFirestore) { }
 
   private authSubscription: Subscription;
-  
+
   idUser;
   user;
+  ok;
 
   ngOnInit() {
     this.afAuth.authState.subscribe((authState) => {
       if (authState == null) {
         this.router.navigate(['/']);
       }
-      this.getRooms();
-    
+
+
       this.idUser = authState.uid;
       this.db
         .doc('users/' + this.idUser)
         .valueChanges()
+        .take(1)
         .subscribe((user) => {
           this.user = user;
+          this.getRooms();
         });
-    
+
     });
   }
 
   getRooms() {
-    const roomCollection = this.db.collection<Room>('rooms');
+    const roomCollection = this.db
+    .collection<Room>('rooms', ref => ref.where('nbPLayers', '==', 1));
 
     const snapshot = roomCollection.snapshotChanges().take(1).subscribe((snapshot) => {
       const player = new Player();
@@ -59,6 +63,9 @@ export class MatchmakingComponent implements OnInit {
         if (room.players.length === 1) {
           room.players.push(player);
           room.players[1].id = this.user.uid;
+          room.players[1].here = true;
+          room.nbPLayers = 2;
+
           this.db.doc('rooms/' + roomId).update(JSON.parse(JSON.stringify(room)));
           this.router.navigate(['game', roomId, player.name]);
           return;
@@ -75,6 +82,8 @@ export class MatchmakingComponent implements OnInit {
       room.token = ['./assets/img/red-frog.png', './assets/img/yellow-frog.png'];
       room.players[0].id = this.user.uid;
       room.chat = ['Good luck !'];
+      room.players[0].here = true;
+      room.nbPLayers = 1;
 
       this.db.collection('rooms')
         .add(JSON.parse(JSON.stringify(room)))
@@ -82,8 +91,8 @@ export class MatchmakingComponent implements OnInit {
           this.router.navigate(['game', doc.id, player.name]);
         });
     });
-  }
 
+  }
   createGrid(lin, col) {
     const grid = [];
     let i = 0;
@@ -104,4 +113,6 @@ export class MatchmakingComponent implements OnInit {
   mainMenu() {
     this.router.navigate(['mainmenu']);
   }
+
 }
+

@@ -1,4 +1,4 @@
-import { Component, OnInit, style } from '@angular/core';
+import { Component, OnInit, style, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -14,7 +14,7 @@ import { timeoutWith, timeInterval, throttleTime } from 'rxjs/operators';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -38,8 +38,19 @@ export class GameComponent implements OnInit {
   userAdvers;
   numPlayer;
   numAdvers;
+  showToken = false;
+  message: string;
+
+
+  updateScroll() {
+    const element = document.getElementById('chat');
+    if (element) {
+      element.scrollTop = element.scrollHeight;
+    }
+  }
 
   ngOnInit() {
+
     this.roomId = this.route.snapshot.paramMap.get('id');
 
     this.authService.authstate.take(1).subscribe((authstate) => {
@@ -50,7 +61,15 @@ export class GameComponent implements OnInit {
         .doc<Room>('rooms/' + this.roomId)
         .valueChanges()
         .subscribe((room) => {
+          console.log(room);
+          if (!room) {
+            console.log('toto');
+
+            this.router.navigate(['mainmenu']);
+            return;
+          }
           this.room = room;
+          this.updateScroll();
           if (this.room.players[0].name === this.authService.name.replace(/\s/g, '')) {
             this.numPlayer = 0;
             this.numAdvers = 1;
@@ -87,20 +106,34 @@ export class GameComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    if (!this.room) {
+      return;
+    }
+    console.log('ngdestroy');
+    if (this.room.players.length !== 2) {
+      this.room.players[1] = {
+        finish: false,
+        name: 'undefind',
+        id: 'undefind',
+        here: false,
+      };
+
+
+    }
     if (this.room.end && !this.room.players[this.numPlayer].finish) {
       console.log('test');
+      this.addStats();
       this.user.nbrGame = this.user.nbrGame + 1;
       this.room.players[this.numPlayer].finish = true;
 
-      if (this.room.players[this.room.turn].name === this.room.players[this.numPlayer].name) {
-        this.user.nbrWins = this.user.nbrWins + 1;
-      } else {
-        this.user.nbrLoose = this.user.nbrLoose + 1;
-      }
-      this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
-      this.db.doc('users/' + this.authService.user.uid).update(this.user);
     }
+    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+    this.db.doc('users/' + this.authService.user.uid).set(this.user);
+    
+    this.router.navigate(['mainmenu']);
+    this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
 
+    });
   }
 
   changeTurn() {
@@ -112,8 +145,7 @@ export class GameComponent implements OnInit {
   play(col) {
 
     if (this.room.players[this.room.turn].name ===
-      this.authService.name.replace(/\s/g, '') && this.room.winner
-      === -1 && this.room.players.length > 1) {
+      this.authService.name.replace(/\s/g, '') && !this.room.end && this.room.players.length > 1) {
       const i = 0;
       let m = this.room.grid.length - 1;
       let ok = false;
@@ -278,6 +310,21 @@ export class GameComponent implements OnInit {
       }
     }
 
+    // vérif égalité 
+
+    let tr = 0;
+    let verif = 0;
+    while (tr < this.room.grid[0].line.length) {
+      if (this.room.grid[0].line[tr] !== 'vide') {
+        verif = verif + 1;
+      }
+      if (verif === this.room.grid[0].line.length) {
+        this.room.end = true;
+        this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+
+      }
+      tr = tr + 1;
+    }
     if (align >= 4) {
       this.room.end = true;
       this.room.winner = this.room.turn;
@@ -289,16 +336,44 @@ export class GameComponent implements OnInit {
   }
 
   menu() {
+    this.room.players[this.numPlayer].here = false;
+    this.verifLevels();
+    if (this.room.players.length === 2) {
+      this.user.nbrGame = this.user.nbrGame + 1;
+      this.user.nbrLoose = this.user.nbrLoose + 1;
+      this.db.doc('users/' + this.authService.user.uid).update(this.user);
+    }
     this.router.navigate(['mainmenu']);
+    this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
+
+    });
   }
 
-  chat(text) {
-  
-    console.log(text);
-    
-    this.room.chat[this.room.chat.length] = this.room.players[this.numPlayer].name + ' : ' + text;
+  menuEnd() {
+    this.room.players[this.numPlayer].here = false;
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
-    
+    this.verifLevels();
+    this.addStats();
+    this.router.navigate(['mainmenu']);
+    this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
+
+    });
+
+
+
+
+  }
+
+  chat() {
+    if (!this.message || this.message === '') {
+      return;
+    }
+    console.log(this.message);
+
+    this.room.chat[this.room.chat.length] = this.room.players[this.numPlayer].name +
+      ' : ' + this.message;
+    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+    this.message = '';
   }
 
   changeToken(img) {
@@ -310,9 +385,72 @@ export class GameComponent implements OnInit {
     }
   }
 
+  showTokens() {
+    if (!this.showToken) {
+      this.showToken = true;
+    } else { this.showToken = false; }
+  }
+
+  addStats() {
+
+    if (this.room.players[this.room.turn].name === this.room.players[this.numPlayer].name) {
+      this.user.nbrWins = this.user.nbrWins + 1;
+    } else if (this.room.winner === -1) {
+      this.user.nbrEqual = this.user.nbrEqual + 1;
+    } else {
+      this.user.nbrLoose = this.user.nbrLoose + 1;
+    }
+    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+    this.db.doc('users/' + this.authService.user.uid).update(this.user);
+  }
+
+  verifLevels() {
+
+    if (this.user.nbrWins < 1) {
+      this.user.levels = 1;
+    } else if (1 <= this.user.nbrWins && this.user.nbrWins < 3) {
+      this.user.levels = 2;
+    } else if (3 <= this.user.nbrWins && this.user.nbrWins < 6) {
+      this.user.levels = 3;
+    } else if (6 <= this.user.nbrWins && this.user.nbrWins < 10) {
+      this.user.levels = 4;
+    } else if (10 <= this.user.nbrWins && this.user.nbrWins < 15) {
+      this.user.levels = 5;
+    } else if (15 <= this.user.nbrWins && this.user.nbrWins < 20) {
+      this.user.levels = 6;
+    } else if (20 <= this.user.nbrWins && this.user.nbrWins < 27) {
+      this.user.levels = 7;
+    } else if (27 <= this.user.nbrWins && this.user.nbrWins < 35) {
+      this.user.levels = 8;
+    } else if (35 <= this.user.nbrWins && this.user.nbrWins < 45) {
+      this.user.levels = 9;
+    } else if (45 <= this.user.nbrWins && this.user.nbrWins < 55) {
+      this.user.levels = 10;
+    } else if (55 <= this.user.nbrWins && this.user.nbrWins < 65) {
+      this.user.levels = 11;
+    } else if (65 <= this.user.nbrWins && this.user.nbrWins < 80) {
+      this.user.levels = 12;
+    } else if (80 <= this.user.nbrWins && this.user.nbrWins < 100) {
+      this.user.levels = 13;
+    } else if (100 <= this.user.nbrWins && this.user.nbrWins < 120) {
+      this.user.levels = 14;
+    } else if (120 <= this.user.nbrWins && this.user.nbrWins < 150) {
+      this.user.levels = 15;
+    } else if (150 <= this.user.nbrWins && this.user.nbrWins < 180) {
+      this.user.levels = 16;
+    } else if (180 <= this.user.nbrWins && this.user.nbrWins < 210) {
+      this.user.levels = 17;
+    } else if (210 <= this.user.nbrWins && this.user.nbrWins < 250) {
+      this.user.levels = 18;
+    } else if (250 <= this.user.nbrWins && this.user.nbrWins < 500) {
+      this.user.levels = 19;
+    } else if (500 < this.user.nbrWins) {
+      this.user.levels = 20;
+    }
 
 
+    this.db.doc('users/' + this.authService.user.uid).set(this.user);
 
-
+  }
 
 }
