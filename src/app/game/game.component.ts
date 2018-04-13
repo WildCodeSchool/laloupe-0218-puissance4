@@ -338,16 +338,10 @@ export class GameComponent implements OnInit, OnDestroy {
   menu() {
     this.room.players[this.numPlayer].here = false;
     this.verifLevels();
-    this.user.nbrGame = this.user.nbrGame + 1;
-    this.user.nbrLoose = this.user.nbrLoose + 1;
-    this.db.doc('users/' + this.authService.user.uid).update(this.user);
-    if (this.room.players.length !== 2) {
-      this.room.players[1] = {
-        finish: false,
-        name: 'undefind',
-        id: 'undefind',
-        here: false,
-      };
+    if (this.room.players.length === 2) {
+      this.user.nbrGame = this.user.nbrGame + 1;
+      this.user.nbrLoose = this.user.nbrLoose + 1;
+      this.db.doc('users/' + this.authService.user.uid).update(this.user);
     }
     this.router.navigate(['mainmenu']);
     this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
