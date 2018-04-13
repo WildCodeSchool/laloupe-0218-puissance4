@@ -46,7 +46,6 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true },
     ),
     FormsModule,
   ],
