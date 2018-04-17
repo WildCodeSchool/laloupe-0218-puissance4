@@ -1,4 +1,5 @@
-<div class="row justify-content-center">
+<body>
+<div class="row justify-content-center test">
   <div class="col-6 text-center backProfile">
     <div *ngIf="afAuth.authState | async as user" class="signOut">
       <img class="imgLog" src="{{ user.photoURL }}" />
@@ -19,3 +20,4 @@
     <button type="button" class="btn" (click)="mainMenu()">Back</button>
   </div>
 </div>
+</body>
