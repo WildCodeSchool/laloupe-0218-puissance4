@@ -103,33 +103,22 @@ export class GameComponent implements OnInit, OnDestroy {
 
         });
     });
+    this.verifLevels();
   }
 
   ngOnDestroy() {
+    this.verifLevels();
     if (!this.room) {
       return;
     }
-    console.log('ngdestroy');
-    if (this.room.players.length !== 2) {
-      this.room.players[1] = {
-        finish: false,
-        name: 'undefind',
-        id: 'undefind',
-        here: false,
-      };
 
-
-    }
-    if (this.room.end && !this.room.players[this.numPlayer].finish) {
-      console.log('test');
+    if (this.room.end && !this.room.players[this.numPlayer].finish && 
+    this.room.players[this.numPlayer].id !== this.room.players[this.numAdvers].id) {
       this.addStats();
-      this.user.nbrGame = this.user.nbrGame + 1;
-      this.room.players[this.numPlayer].finish = true;
-
     }
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
     this.db.doc('users/' + this.authService.user.uid).set(this.user);
-    
+
     this.router.navigate(['mainmenu']);
     this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
 
@@ -325,11 +314,15 @@ export class GameComponent implements OnInit, OnDestroy {
       }
       tr = tr + 1;
     }
+    // verif victoir
     if (align >= 4) {
       this.room.end = true;
       this.room.winner = this.room.turn;
       this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
       console.log(this.room.players[this.room.winner].name + 'WIN !');
+      if (this.room.players[this.numPlayer].id !== this.room.players[this.numAdvers].id) {
+        this.addStats();
+      }
     } else {
       this.changeTurn();
     }
@@ -338,10 +331,14 @@ export class GameComponent implements OnInit, OnDestroy {
   menu() {
     this.room.players[this.numPlayer].here = false;
     this.verifLevels();
-    if (this.room.players.length === 2) {
+    if (this.room.players.length === 2 && 
+      this.room.players[this.numPlayer].id !== this.room.players[this.numAdvers].id) {
       this.user.nbrGame = this.user.nbrGame + 1;
       this.user.nbrLoose = this.user.nbrLoose + 1;
       this.db.doc('users/' + this.authService.user.uid).update(this.user);
+      this.userAdvers.nbrWins = this.userAdvers.nbrWins + 1;
+      this.userAdvers.nbrGame = this.userAdvers.nbrGame + 1;
+      this.db.doc('users/' + this.room.players[this.numAdvers].id).update(this.userAdvers);
     }
     this.router.navigate(['mainmenu']);
     this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
@@ -350,10 +347,12 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   menuEnd() {
-    this.room.players[this.numPlayer].here = false;
     this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
     this.verifLevels();
-    this.addStats();
+    if (!this.room.players[this.numPlayer].finish && 
+      this.room.players[this.numPlayer].id !== this.room.players[this.numAdvers].id) {
+      this.addStats();
+    }
     this.router.navigate(['mainmenu']);
     this.db.doc<Room>('rooms/' + this.roomId).delete().then(() => {
 
@@ -393,15 +392,31 @@ export class GameComponent implements OnInit, OnDestroy {
 
   addStats() {
 
-    if (this.room.players[this.room.turn].name === this.room.players[this.numPlayer].name) {
-      this.user.nbrWins = this.user.nbrWins + 1;
-    } else if (this.room.winner === -1) {
-      this.user.nbrEqual = this.user.nbrEqual + 1;
-    } else {
-      this.user.nbrLoose = this.user.nbrLoose + 1;
+    if (this.room.end && !this.room.players[this.numPlayer].finish && 
+      this.room.players[this.numPlayer].id !== this.room.players[this.numAdvers].id) {
+      if (!this.room.players[this.numPlayer].finish &&
+        this.room.winner === this.numPlayer) {
+        this.user.nbrWins = this.user.nbrWins + 1;
+        this.userAdvers.nbrLoose = this.userAdvers.nbrLoose + 1;
+      }
+      if (!this.room.players[this.numPlayer].finish &&
+        this.room.winner !== this.numPlayer && this.room.winner !== -1) {
+        this.user.nbrLoose = this.user.nbrLoose + 1;
+        this.userAdvers.nbrWins = this.userAdvers.nbrWins + 1;
+      }
+      if (!this.room.players[this.numPlayer].finish &&
+        this.room.winner === -1) {
+        this.user.nbrEqual = this.user.nbrEqual + 1;
+        this.userAdvers.nbrEqual = this.userAdvers.nbrEqual + 1;
+      }
+      this.user.nbrGame = this.user.nbrGame + 1;
+      this.userAdvers.nbrGame = this.userAdvers.nbrGame + 1;   
+      this.room.players[this.numPlayer].finish = true;
+      this.room.players[this.numAdvers].finish = true;
+      this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
+      this.db.doc('users/' + this.authService.user.uid).update(this.user);
+      this.db.doc('users/' + this.room.players[this.numAdvers].id).update(this.userAdvers);
     }
-    this.db.doc<Room>('rooms/' + this.roomId).update(this.room);
-    this.db.doc('users/' + this.authService.user.uid).update(this.user);
   }
 
   verifLevels() {

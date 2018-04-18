@@ -1,10 +1,12 @@
 <div *ngIf="room">
   <div class="container">
     <div class="row justify-content-center yourTurn">
-      <div class="myTurn" *ngIf="this.room.turn === numPlayer && this.room.winner === -1">
+      <div class="myTurn" *ngIf="this.room.turn === numPlayer && this.room.winner === -1 && 
+      this.room.end === false">
         It's your turn !
       </div>
-      <div class="oppTurn" *ngIf="this.room.turn === numAdvers && this.room.winner === -1">
+      <div class="oppTurn" *ngIf="this.room.turn === numAdvers && this.room.winner === -1 && 
+      this.room.end === false">
         It's your opponent turn !
       </div>
       <div class="winTxt" *ngIf="this.room.winner != -1">
@@ -30,10 +32,12 @@
           {{userAdvers.name}}
           <img class="img-player" src='{{userAdvers.img}}' />
         </div> -->
-        <div class="winBtn" *ngIf="this.room.winner != -1">
+        <div class="winBtn" *ngIf="this.room.winner != -1 || this.room.winner === -1 && 
+        this.room.end === true ">
           <p (click)="menuEnd()">Back to Menu</p>
         </div>
-        <div class="surrender" *ngIf="this.room.winner === -1">
+        <div class="surrender" *ngIf="this.room.winner === -1 && 
+        this.room.end === false">
           <p (click)="menu()">Surrender ?</p>
         </div>
         <!-- <div class="player1" *ngIf="user">
@@ -146,10 +150,10 @@
             <img class="tokenSelect " alt="epileptique " src="./assets/img/epileptique.gif" (click)="changeToken(
             './assets/img/epileptique.gif') " />
           </div>
-          <div *ngIf="user.levels >= 20">
+          <!-- <div *ngIf="user.levels >= 20">
             <img class="tokenSelect " alt="goldfish " src="./assets/img/goldfishdrib.gif" (click)="changeToken(
               './assets/img/goldfishdrib.gif') " />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
