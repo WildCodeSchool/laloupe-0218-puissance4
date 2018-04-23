@@ -16,7 +16,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { AuthService } from './auth.service';
 import { FormsModule } from '@angular/forms';
 
-
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'mainmenu', component: MainmenuComponent },
